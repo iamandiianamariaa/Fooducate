@@ -3,6 +3,7 @@ package com.example.fooducate;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -37,30 +38,13 @@ public class ScannerActivity extends AppCompatActivity {
         if (result!= null)
         {
             if(result.getContents() != null){
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(result.getContents());
-                builder.setTitle("Scanning result");
-                builder.setPositiveButton("Scan Again", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        scan();
-                    }
-                }).setNegativeButton("finish", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getApplicationContext(), ProductInformationActivity.class);
-                        intent.putExtra("barcode", result.getContents());
-                        startActivity(intent);
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-            else {
-                Toast.makeText(this, "No results", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, ProductInformationActivity.class);
+                intent.putExtra("barcode", result.getContents());
+                startActivity(intent);
             }
         }
         else{
+            Toast.makeText(this, "No results", Toast.LENGTH_LONG).show();
             super.onActivityResult(requestCode, resultCode, data);
         }
     }

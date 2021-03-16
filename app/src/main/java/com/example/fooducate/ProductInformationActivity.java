@@ -55,12 +55,12 @@ public class ProductInformationActivity extends AppCompatActivity {
                         content += "ECOSCORE: " + product.getProduct().getEcoscore() + "\n";
                     if(product.getProduct().getAllergens()!=null)
                         content += "ALLERGENS: " + product.getProduct().getAllergens() + "\n";
-                    for(String elem : product.getProduct().getAdditives())
-                        content += "ADDITIVES: " + elem + "\n";
-                    for(String elem : product.getProduct().getLabels())
-                        content += "LABELS: " + elem + "\n";
-                    for(String elem : product.getProduct().getAnalysis())
-                        content += "ANALYSIS: " + elem + "\n";
+//                    for(String elem : product.getProduct().getAdditives())
+//                        content += "ADDITIVES: " + elem + "\n";
+//                    for(String elem : product.getProduct().getLabels())
+//                        content += "LABELS: " + elem + "\n";
+//                    for(String elem : product.getProduct().getAnalysis())
+//                        content += "ANALYSIS: " + elem + "\n";
                     if(product.getProduct().getLevels()!=null)
                     {
                         content += "FAT: " + product.getProduct().getLevels().getFat() + "\n";
@@ -70,7 +70,7 @@ public class ProductInformationActivity extends AppCompatActivity {
                     }
                     content += "NUTRIMENTS: " + product.getProduct().getNutriments().getCarbo_100g() + "\n";
                     content += "NUTRIMENTS: " + product.getProduct().getNutriments().getCarbo_serving() + "\n";
-                    content += "IMAGES: " + product.getProduct().getImages().getIngredients().getDisplay().getUrl() + "\n";
+                    //content += "IMAGES: " + product.getProduct().getImages().getIngredients().getDisplay().getUrl() + "\n";
                     text.append(content);
                 }
             }

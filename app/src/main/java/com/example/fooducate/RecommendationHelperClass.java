@@ -1,10 +1,10 @@
 package com.example.fooducate;
 
-public class FeaturedHelperClass {
+public class RecommendationHelperClass {
     private int image;
     private String title, description;
 
-    public FeaturedHelperClass(int image, String title, String description) {
+    public RecommendationHelperClass(int image, String title, String description) {
         this.image = image;
         this.title = title;
         this.description = description;

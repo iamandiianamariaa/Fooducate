@@ -3,18 +3,14 @@ package com.example.fooducate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,31 +20,26 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 public class HomeFragment extends Fragment {
     private EditText searchText;
     private Button button;
     private ViewPager viewPager;
     private ArrayList<SwipeModel> modelArrayList;
     private Adapter adapter;
-    private RecyclerView featuredRecycler, mostViewedRecycler, categoriesRecycler;
+    private RecyclerView recommendationRecycler;
     private RecyclerView.Adapter recycleAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.home_fragment_layout, container, false);
         searchText = view.findViewById(R.id.search_bar);
-        featuredRecycler = view.findViewById(R.id.featured_recycler);
+        recommendationRecycler = view.findViewById(R.id.featured_recycler);
 
         button = view.findViewById(R.id.sbutton);
         viewPager = view.findViewById(R.id.viewPager);
-        featuredRecycler();
+        recommendationRecycler();
         loadCards();
 
         button.setOnClickListener(new View.OnClickListener()
@@ -72,21 +63,19 @@ public class HomeFragment extends Fragment {
         });
         return view;
     }
-    private void featuredRecycler() {
+    private void recommendationRecycler() {
 
-        featuredRecycler.setHasFixedSize(true);
-        featuredRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recommendationRecycler.setHasFixedSize(true);
+        recommendationRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        ArrayList<FeaturedHelperClass> featuredLocations = new ArrayList<>();
+        ArrayList<RecommendationHelperClass> recommendations = new ArrayList<>();
 
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.sleep, "Mcdonald's", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.home, "Edenrobe", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas"));
-        featuredLocations.add(new FeaturedHelperClass(R.drawable.water_consumption, "Walmart", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas"));
+        recommendations.add(new RecommendationHelperClass(R.drawable.sleep, "Mcdonald's", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas"));
+        recommendations.add(new RecommendationHelperClass(R.drawable.home, "Edenrobe", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas"));
+        recommendations.add(new RecommendationHelperClass(R.drawable.water_consumption, "Walmart", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas"));
 
-        recycleAdapter = new FeaturedAdapter(featuredLocations);
-        featuredRecycler.setAdapter(recycleAdapter);
-
-
+        recycleAdapter = new RecommendationAdapter(recommendations);
+        recommendationRecycler.setAdapter(recycleAdapter);
     }
 
     private void loadCards(){

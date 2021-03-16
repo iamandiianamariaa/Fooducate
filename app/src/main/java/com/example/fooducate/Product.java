@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class Product {
+    @SerializedName("code")
+    private String barcode;
+
     @SerializedName("product_name")
     private String name;
 
@@ -29,7 +32,7 @@ public class Product {
     @SerializedName("ingredients_text")
     private String ingredients;
 
-    @SerializedName("Xgens")
+    @SerializedName("allergens")
     private String allergens;
 
     @SerializedName("additives_tags")
@@ -168,6 +171,14 @@ public class Product {
 
     public String getCompany() {
         return company;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
 }

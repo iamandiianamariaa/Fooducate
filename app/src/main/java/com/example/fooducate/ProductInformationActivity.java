@@ -1,6 +1,8 @@
 package com.example.fooducate;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +41,8 @@ public class ProductInformationActivity extends AppCompatActivity {
                 ResponseObject product = response.body();
                 if(product.getStatus() == 0)
                 {
-                    text.setText("The product you are searching for cannot be found. Please try again...");
+                    startActivity(new Intent(getApplicationContext(), FoodNotFoundActivity.class));
+                    finish();
                 }
                 else{
                     String content = "";

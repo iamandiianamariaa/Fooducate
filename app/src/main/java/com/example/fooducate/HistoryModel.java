@@ -1,23 +1,13 @@
 package com.example.fooducate;
 
 public class HistoryModel {
-    private String title, description;
-    private int productImage, nutriImage, time;
+    private String title, description, productImage, nutriImage;
 
-    public HistoryModel(String title, String description, int productImage, int nutriImage, int time) {
+    public HistoryModel(String title, String description, String productImage, String nutriImage) {
         this.title = title;
         this.description = description;
         this.productImage = productImage;
         this.nutriImage = nutriImage;
-        this.time = time;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
     }
 
     public String getTitle() {
@@ -36,19 +26,19 @@ public class HistoryModel {
         this.description = description;
     }
 
-    public int getProductImage() {
+    public String getProductImage() {
         return productImage;
     }
 
-    public void setProductImage(int productImage) {
+    public void setProductImage(String productImage) {
         this.productImage = productImage;
     }
 
-    public int getNutriImage() {
+    public String getNutriImage() {
         return nutriImage;
     }
 
-    public void setNutriImage(int nutriImage) {
+    public void setNutriImage(String nutriImage) {
         this.nutriImage = nutriImage;
     }
 }

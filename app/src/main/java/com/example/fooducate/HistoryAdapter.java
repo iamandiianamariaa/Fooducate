@@ -1,5 +1,7 @@
 package com.example.fooducate;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
@@ -29,9 +36,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HistoryModel historyModel = products.get(position);
 
-        holder.productImage.setImageResource(historyModel.getProductImage());
-        holder.nutriImage.setImageResource(historyModel.getNutriImage());
-        holder.time.setImageResource(historyModel.getTime());
+        Picasso.get().load(historyModel.getProductImage()).into(holder.productImage);
+        Picasso.get().load(historyModel.getNutriImage()).into(holder.nutriImage);
         holder.title.setText(historyModel.getTitle());
         holder.description.setText(historyModel.getDescription());
 

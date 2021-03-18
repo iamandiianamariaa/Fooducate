@@ -52,10 +52,10 @@ public class Nutriments {
     private double sodium_serving;
 
     @SerializedName("energy-kcal_100g")
-    private int kcal_100g;
+    private double kcal_100g;
 
     @SerializedName("energy-kcal_serving")
-    private int kcal_serving;
+    private double kcal_serving;
 
     public double getFat_100g() {
         return fat_100g;
@@ -185,7 +185,7 @@ public class Nutriments {
         this.sodium_serving = sodium_serving;
     }
 
-    public int getKcal_100g() {
+    public double getKcal_100g() {
         return kcal_100g;
     }
 
@@ -193,7 +193,7 @@ public class Nutriments {
         this.kcal_100g = kcal_100g;
     }
 
-    public int getKcal_serving() {
+    public double getKcal_serving() {
         return kcal_serving;
     }
 

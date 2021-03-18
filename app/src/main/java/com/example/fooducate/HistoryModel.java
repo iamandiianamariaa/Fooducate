@@ -1,9 +1,10 @@
 package com.example.fooducate;
 
 public class HistoryModel {
-    private String title, description, productImage, nutriImage;
+    private String title, description, productImage;
+    int nutriImage;
 
-    public HistoryModel(String title, String description, String productImage, String nutriImage) {
+    public HistoryModel(String title, String description, String productImage, int nutriImage) {
         this.title = title;
         this.description = description;
         this.productImage = productImage;
@@ -34,11 +35,11 @@ public class HistoryModel {
         this.productImage = productImage;
     }
 
-    public String getNutriImage() {
+    public int getNutriImage() {
         return nutriImage;
     }
 
-    public void setNutriImage(String nutriImage) {
+    public void setNutriImage(int nutriImage) {
         this.nutriImage = nutriImage;
     }
 }

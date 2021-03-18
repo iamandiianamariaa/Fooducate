@@ -1,5 +1,6 @@
 package com.example.fooducate;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,20 +52,20 @@ public class HistoryFragment extends Fragment {
 
         ArrayList<HistoryModel> products = new ArrayList<>();
 
-//        products.add(new HistoryModel("Mcdonald's", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas", R.drawable.home, R.drawable.home));
-//        products.add(new HistoryModel("Mcdonald's", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas", R.drawable.home, R.drawable.home));
-//        products.add(new HistoryModel("Mcdonald's", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas", R.drawable.home, R.drawable.home));
-//        products.add(new HistoryModel("Mcdonald's", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas", R.drawable.home, R.drawable.home));
-//        products.add(new HistoryModel("Mcdonald's", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas", R.drawable.home, R.drawable.home));
-//        products.add(new HistoryModel("Mcdonald's", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas", R.drawable.home, R.drawable.home));
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot: snapshot.getChildren())
                 {
                     ResponseObject obj = dataSnapshot.getValue(ResponseObject.class);
-                    products.add(new HistoryModel(obj.getProduct().getName(),obj.getProduct().getCompany(),obj.getProduct().getImages().getFront().getDisplay().getUrl(),obj.getProduct().getImages().getFront().getDisplay().getUrl()));
+                    String nutriscore;
+                    if(obj.getProduct().getNutriscore() == null)
+                        nutriscore = "nutri";
+                    else nutriscore = "nutri_" + obj.getProduct().getNutriscore();
+                    Resources res = getResources();
+                    int id = res.getIdentifier(nutriscore, "drawable", getContext().getPackageName());
+                    System.out.println("id"+id);
+                    products.add(new HistoryModel(obj.getProduct().getName(),obj.getProduct().getCompany(),obj.getProduct().getImages().getFront().getDisplay().getUrl(),id));
                 }
                 adapter.notifyDataSetChanged();
             }

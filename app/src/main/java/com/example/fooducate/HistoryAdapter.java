@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
     private ArrayList<HistoryModel>products;
@@ -41,6 +42,31 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.title.setText(historyModel.getTitle());
         holder.description.setText(historyModel.getDescription());
 
+        Date today = new Date();
+        long diff =  today.getTime() - historyModel.getScanDate().getTime();
+        int numOfDays = (int) (diff / (1000 * 60 * 60 * 24));
+        int hours = (int) (diff / (1000 * 60 * 60));
+        int minutes = (int) (diff / (1000 * 60));
+        int seconds = (int) (diff / (1000));
+        if(numOfDays!=0)
+        {
+            String text = numOfDays+" days ago";
+            holder.date.setText(text);
+        }
+        else if (hours!=0)
+        {
+            String text = hours+" hours ago";
+            holder.date.setText(text);
+        }
+        else if (minutes!=0){
+            String text = minutes+" minutes ago";
+            holder.date.setText(text);
+        }
+        else {
+            String text = seconds+" seconds ago";
+            holder.date.setText(text);
+        }
+
     }
 
     @Override
@@ -51,7 +77,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView productImage, nutriImage, time;
-        TextView title, description;
+        TextView title, description, date;
 
         public ViewHolder(@NonNull View itemView) {
 
@@ -60,6 +86,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             productImage = itemView.findViewById(R.id.productimg);
             nutriImage = itemView.findViewById(R.id.nutriimg);
             time = itemView.findViewById(R.id.time);
+            date = itemView.findViewById(R.id.days);
             title = itemView.findViewById(R.id.productTitle);
             description = itemView.findViewById(R.id.productBrand);
         }

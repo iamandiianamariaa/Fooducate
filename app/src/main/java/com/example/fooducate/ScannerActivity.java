@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.Date;
+
 public class ScannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +41,11 @@ public class ScannerActivity extends AppCompatActivity {
         {
             if(result.getContents() != null){
                 Intent intent = new Intent(this, ProductInformationActivity.class);
-                intent.putExtra("barcode", result.getContents());
+                Bundle extras = new Bundle();
+                Date date = new Date();
+                extras.putString("barcode", result.getContents());
+                extras.putLong("time", date.getTime());
+                intent.putExtras(extras);
                 startActivity(intent);
             }
         }

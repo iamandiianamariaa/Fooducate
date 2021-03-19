@@ -17,6 +17,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,6 +51,9 @@ public class ProductInformationActivity extends AppCompatActivity {
         OpenFoodFactsAPI jsonPlaceHolderApi = retrofit.create(OpenFoodFactsAPI.class);
         Bundle b = getIntent().getExtras();
         String id = b.getString("barcode");
+        Date scanDate = new Date();
+        scanDate.setTime(b.getLong("time", -1));
+
         Call<ResponseObject> call = jsonPlaceHolderApi.getProducts(id);
         call.enqueue(new Callback<ResponseObject>() {
             @Override
@@ -57,6 +64,7 @@ public class ProductInformationActivity extends AppCompatActivity {
                 }
 
                 ResponseObject product = response.body();
+                FirebaseModel addInFirebase = new FirebaseModel(product, scanDate);
                 if(product.getStatus() == 0)
                 {
                     startActivity(new Intent(getApplicationContext(), FoodNotFoundActivity.class));
@@ -65,7 +73,7 @@ public class ProductInformationActivity extends AppCompatActivity {
                 else
                     {
 
-                    myRef.child(userID).child(product.getProduct().getBarcode()).setValue(product, new DatabaseReference.CompletionListener() {
+                    myRef.child(userID).child(product.getProduct().getBarcode()).setValue(addInFirebase, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                             if (error != null) {

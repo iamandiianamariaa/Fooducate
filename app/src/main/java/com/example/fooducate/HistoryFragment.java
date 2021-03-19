@@ -57,15 +57,15 @@ public class HistoryFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot: snapshot.getChildren())
                 {
-                    ResponseObject obj = dataSnapshot.getValue(ResponseObject.class);
+                    FirebaseModel obj = dataSnapshot.getValue(FirebaseModel.class);
+
                     String nutriscore;
-                    if(obj.getProduct().getNutriscore() == null)
+                    if(obj.getObject().getProduct().getNutriscore() == null)
                         nutriscore = "nutri";
-                    else nutriscore = "nutri_" + obj.getProduct().getNutriscore();
-                    Resources res = getResources();
-                    int id = res.getIdentifier(nutriscore, "drawable", getContext().getPackageName());
-                    System.out.println("id"+id);
-                    products.add(new HistoryModel(obj.getProduct().getName(),obj.getProduct().getCompany(),obj.getProduct().getImages().getFront().getDisplay().getUrl(),id));
+                    else nutriscore = "nutri_" + obj.getObject().getProduct().getNutriscore();
+
+                    int imageId = getResources().getIdentifier(nutriscore, "drawable", getContext().getPackageName());
+                    products.add(new HistoryModel(obj.getObject().getProduct().getName(),obj.getObject().getProduct().getCompany(),obj.getObject().getProduct().getImages().getFront().getDisplay().getUrl(),imageId, obj.getScanDate()));
                 }
                 adapter.notifyDataSetChanged();
             }

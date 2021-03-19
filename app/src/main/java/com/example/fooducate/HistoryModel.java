@@ -1,14 +1,26 @@
 package com.example.fooducate;
 
+import java.util.Date;
+
 public class HistoryModel {
     private String title, description, productImage;
-    int nutriImage;
+    private int nutriImage;
+    private Date scanDate;
 
-    public HistoryModel(String title, String description, String productImage, int nutriImage) {
+    public HistoryModel(String title, String description, String productImage, int nutriImage, Date scanDate) {
         this.title = title;
         this.description = description;
         this.productImage = productImage;
         this.nutriImage = nutriImage;
+        this.scanDate = scanDate;
+    }
+
+    public Date getScanDate() {
+        return scanDate;
+    }
+
+    public void setScanDate(Date scanDate) {
+        this.scanDate = scanDate;
     }
 
     public String getTitle() {

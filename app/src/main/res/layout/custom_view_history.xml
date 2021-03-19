@@ -97,8 +97,8 @@
 
             <ImageView
                 android:id="@+id/nutriimg"
-                android:layout_width="103dp"
-                android:layout_height="56dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="6dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"

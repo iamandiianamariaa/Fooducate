@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new HistoryFragment();
                             break;
                         case R.id.stats:
-                            //selectedFragment = AccountFragment.newInstance();
+                            selectedFragment = new ReportFragment();
                             break;
                         case R.id.profile:
                             selectedFragment = new ProfileFragment();

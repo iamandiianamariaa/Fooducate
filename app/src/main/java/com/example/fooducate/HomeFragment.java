@@ -2,18 +2,23 @@ package com.example.fooducate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -29,6 +34,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView recommendationRecycler;
     private RecyclerView.Adapter recycleAdapter;
 
+    RecyclerView rvArticles;
+    HomeAdapter mAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,9 +46,58 @@ public class HomeFragment extends Fragment {
         recommendationRecycler = view.findViewById(R.id.featured_recycler);
 
         button = view.findViewById(R.id.sbutton);
-        viewPager = view.findViewById(R.id.viewPager);
+
+        rvArticles = view.findViewById(R.id.rvArticles);
+        rvArticles.setHasFixedSize(true);
+
+        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        rvArticles.setLayoutManager(layoutManager);
+
+        ArrayList<SwipeHomeModel> dataArticles = new ArrayList<>();
+        dataArticles.add(new SwipeHomeModel("Nutriscore","The Nutri-Score is a logo that shows the nutritional quality of food products with A to E grades. The Nutri-Score grade is determined by the amount of healthy and unhealthy nutrients.", R.drawable.nutri_a));
+        dataArticles.add(new SwipeHomeModel("Nutriscore","Negative points: energy, saturated fat, sugars, sodium (high levels are considered unhealthy). Positive points: the proportion of fruits, vegetables and nuts, of olive, rapeseed, walnut and oils, of fibers and proteins (high levels are considered good for health).", R.drawable.nutri_a));
+
+        mAdapter = new HomeAdapter(dataArticles);
+        rvArticles.setAdapter(mAdapter);
+        rvArticles.setPadding(130,100,130,100);
+
+        final SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(rvArticles);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                RecyclerView.ViewHolder viewHolder = rvArticles.findViewHolderForAdapterPosition(0);
+                RelativeLayout rl1 = viewHolder.itemView.findViewById(R.id.rl1);
+                rl1.animate().scaleY(1).scaleX(1).setDuration(350).setInterpolator(new AccelerateInterpolator()).start();
+            }
+        },100);
+
+        rvArticles.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                View v = snapHelper.findSnapView(layoutManager);
+                int pos = layoutManager.getPosition(v);
+
+                RecyclerView.ViewHolder viewHolder = rvArticles.findViewHolderForAdapterPosition(pos);
+                RelativeLayout rl1 = viewHolder.itemView.findViewById(R.id.rl1);
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    rl1.animate().setDuration(350).scaleX(1).scaleY(1).setInterpolator(new AccelerateInterpolator()).start();
+                }else{
+                    rl1.animate().setDuration(350).scaleX(0.75f).scaleY(0.75f).setInterpolator(new AccelerateInterpolator()).start();
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+        //viewPager = view.findViewById(R.id.viewPager);
         recommendationRecycler();
-        loadCards();
+        //loadCards();
 
         button.setOnClickListener(new View.OnClickListener()
         {

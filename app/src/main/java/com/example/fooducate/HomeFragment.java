@@ -113,7 +113,9 @@ public class HomeFragment extends Fragment {
                 if (!TextUtils.isEmpty(barCode)) {
 
                     Intent intent = new Intent(getContext(), ProductInformationActivity.class);
-                    intent.putExtra("barcode", barCode);
+                    Bundle extras = new Bundle();
+                    extras.putString("barcode", barCode);
+                    extras.putBoolean("scanned", true);
                     startActivity(intent);
                 }
                 else {

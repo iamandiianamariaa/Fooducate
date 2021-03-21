@@ -1,13 +1,17 @@
 package com.example.fooducate;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HistoryFragment extends Fragment implements HistoryAdapter.OnProductListener {
     private RecyclerView recyclerView;
@@ -47,6 +53,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
         myRef = mFirebaseDatabase.getReference("users").child(userID);
+        showProgressDialog();
         Recycler();
         return view;
     }
@@ -93,5 +100,22 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
         Intent intent = new Intent(getContext(), ProductInformationActivity.class);
         intent.putExtras(extras);
         startActivity(intent);
+    }
+
+    private void showProgressDialog(){
+        final Dialog lottieProgressbarDialog = new Dialog(getContext(), R.style.Blur);
+
+        View lottieProgressbarView = getLayoutInflater().inflate(R.layout.dialog_lottie, null);
+
+        lottieProgressbarDialog.setContentView(lottieProgressbarView);
+        lottieProgressbarDialog.setCancelable(false);
+        lottieProgressbarDialog.show();
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                lottieProgressbarDialog.dismiss(); //close the dialog
+                t.cancel();
+            }
+        }, 2000);
     }
 }

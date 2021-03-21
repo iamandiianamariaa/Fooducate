@@ -15,4 +15,11 @@
     <style name="style_navigation">
         <item name="fontFamily">@font/josefin_sans_semibold</item>
     </style>
+
+    <style name="Blur" parent="android:style/Theme.Translucent">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@color/light_grey</item>
+    </style>
 </resources>

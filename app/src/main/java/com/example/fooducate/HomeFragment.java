@@ -56,6 +56,11 @@ public class HomeFragment extends Fragment {
         ArrayList<SwipeHomeModel> dataArticles = new ArrayList<>();
         dataArticles.add(new SwipeHomeModel("Nutriscore","The Nutri-Score is a logo that shows the nutritional quality of food products with A to E grades. The Nutri-Score grade is determined by the amount of healthy and unhealthy nutrients.", R.drawable.nutri_a));
         dataArticles.add(new SwipeHomeModel("Nutriscore","Negative points: energy, saturated fat, sugars, sodium (high levels are considered unhealthy). Positive points: the proportion of fruits, vegetables and nuts, of olive, rapeseed, walnut and oils, of fibers and proteins (high levels are considered good for health).", R.drawable.nutri_a));
+        dataArticles.add(new SwipeHomeModel("Nova", "Group 1 - Unprocessed or minimally processed foods\n" +
+                "Group 2 - Processed culinary ingredients\n" +
+                "Group 3 - Processed foods\n" +
+                "Group 4 - Ultra-processed food\n" + "and drink products", R.drawable.nova));
+        dataArticles.add(new SwipeHomeModel("Ecoscore", "The eco-score takes into account the analysis of the whole production lifecycle such as production, transport and manufacturing of packaging. Each product is given a score of 100, taking account of the recyclability of packaging, labels, country of origin, seasonality.", R.drawable.ecoscore));
 
         mAdapter = new HomeAdapter(dataArticles);
         rvArticles.setAdapter(mAdapter);

@@ -21,16 +21,18 @@ import java.util.Date;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
     private ArrayList<HistoryModel>products;
+    private OnProductListener mOnProductListener;
 
-    public HistoryAdapter(ArrayList<HistoryModel> products) {
+    public HistoryAdapter(ArrayList<HistoryModel> products, OnProductListener onProductListener) {
         this.products = products;
+        this.mOnProductListener = onProductListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_view_history, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnProductListener);
     }
 
     @Override
@@ -75,11 +77,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return products.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView productImage, nutriImage, time;
         TextView title, description, date;
+        OnProductListener mOnProductListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnProductListener onProductListener) {
 
             super(itemView);
 
@@ -89,6 +92,18 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             date = itemView.findViewById(R.id.days);
             title = itemView.findViewById(R.id.productTitle);
             description = itemView.findViewById(R.id.productBrand);
+            mOnProductListener = onProductListener;
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            mOnProductListener.onProductClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnProductListener{
+        void onProductClick(int position);
     }
 }

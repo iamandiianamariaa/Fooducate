@@ -6,13 +6,23 @@ public class HistoryModel {
     private String title, description, productImage;
     private int nutriImage;
     private Date scanDate;
+    private String barcode;
 
-    public HistoryModel(String title, String description, String productImage, int nutriImage, Date scanDate) {
+    public HistoryModel(String title, String description, String productImage, int nutriImage, Date scanDate, String barcode) {
         this.title = title;
         this.description = description;
         this.productImage = productImage;
         this.nutriImage = nutriImage;
         this.scanDate = scanDate;
+        this.barcode = barcode;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public Date getScanDate() {

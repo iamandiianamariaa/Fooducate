@@ -1,11 +1,14 @@
 package com.example.fooducate;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,14 +25,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-public class HistoryFragment extends Fragment {
+public class HistoryFragment extends Fragment implements HistoryAdapter.OnProductListener {
     private RecyclerView recyclerView;
     private HistoryAdapter adapter;
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
     private String userID;
+    private ArrayList<HistoryModel> products;
 
     @Nullable
     @Override
@@ -50,7 +55,7 @@ public class HistoryFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
-        ArrayList<HistoryModel> products = new ArrayList<>();
+        products = new ArrayList<>();
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -58,14 +63,13 @@ public class HistoryFragment extends Fragment {
                 for(DataSnapshot dataSnapshot: snapshot.getChildren())
                 {
                     FirebaseModel obj = dataSnapshot.getValue(FirebaseModel.class);
-
                     String nutriscore;
                     if(obj.getObject().getProduct().getNutriscore() == null)
                         nutriscore = "nutri";
                     else nutriscore = "nutri_" + obj.getObject().getProduct().getNutriscore();
 
                     int imageId = getResources().getIdentifier(nutriscore, "drawable", getContext().getPackageName());
-                    products.add(new HistoryModel(obj.getObject().getProduct().getName(),obj.getObject().getProduct().getCompany(),obj.getObject().getProduct().getImages().getFront().getDisplay().getUrl(),imageId, obj.getScanDate()));
+                    products.add(new HistoryModel(obj.getObject().getProduct().getName(),obj.getObject().getProduct().getCompany(),obj.getObject().getProduct().getImages().getFront().getDisplay().getUrl(),imageId, obj.getScanDate(), obj.getObject().getProduct().getBarcode()));
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -76,7 +80,18 @@ public class HistoryFragment extends Fragment {
             }
         });
 
-        adapter = new HistoryAdapter(products);
+        adapter = new HistoryAdapter(products, this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onProductClick(int position) {
+        HistoryModel productClicked = products.get(position);
+        Bundle extras = new Bundle();
+        extras.putString("barcode", productClicked.getBarcode());
+        extras.putBoolean("scanned", false);
+        Intent intent = new Intent(getContext(), ProductInformationActivity.class);
+        intent.putExtras(extras);
+        startActivity(intent);
     }
 }

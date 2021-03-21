@@ -43,16 +43,17 @@ public class ProductInformationActivity extends AppCompatActivity {
         userID = user.getUid();
 
         TextView text = findViewById(R.id.txt);
+
+        Bundle b = getIntent().getExtras();
+        String id = b.getString("barcode");
+        Boolean scanned = b.getBoolean("scanned");
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://us.openfoodfacts.org")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         OpenFoodFactsAPI jsonPlaceHolderApi = retrofit.create(OpenFoodFactsAPI.class);
-        Bundle b = getIntent().getExtras();
-        String id = b.getString("barcode");
-        Date scanDate = new Date();
-        scanDate.setTime(b.getLong("time", -1));
 
         Call<ResponseObject> call = jsonPlaceHolderApi.getProducts(id);
         call.enqueue(new Callback<ResponseObject>() {
@@ -64,27 +65,32 @@ public class ProductInformationActivity extends AppCompatActivity {
                 }
 
                 ResponseObject product = response.body();
-                FirebaseModel addInFirebase = new FirebaseModel(product, scanDate);
-                if(product.getStatus() == 0)
+                if(scanned)
                 {
-                    startActivity(new Intent(getApplicationContext(), FoodNotFoundActivity.class));
-                    finish();
-                }
-                else
+                    Date scanDate = new Date();
+                    scanDate.setTime(b.getLong("time", -1));
+                    FirebaseModel addInFirebase = new FirebaseModel(product, scanDate);
+                    if(product.getStatus() == 0)
                     {
+                        startActivity(new Intent(getApplicationContext(), FoodNotFoundActivity.class));
+                        finish();
+                    }
+                    else {
 
-                    myRef.child(userID).child(product.getProduct().getBarcode()).setValue(addInFirebase, new DatabaseReference.CompletionListener() {
-                        @Override
-                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                            if (error != null) {
-                                Log.d("FIREBASEDB", "Data could not be saved " + error.getMessage());
-                            } else {
-                                Log.d("FIREBASEDB","Data saved successfully.");
+                        myRef.child(userID).child(product.getProduct().getBarcode()).setValue(addInFirebase, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                if (error != null) {
+                                    Log.d("FIREBASEDB", "Data could not be saved " + error.getMessage());
+                                } else {
+                                    Log.d("FIREBASEDB", "Data saved successfully.");
+                                }
+
                             }
 
-                        }
-
-                    });
+                        });
+                    }
+                }
 
                     String content = "";
                     content += "NAME: " + product.getProduct().getName()+ "\n";
@@ -117,7 +123,6 @@ public class ProductInformationActivity extends AppCompatActivity {
                     //content += "IMAGES: " + product.getProduct().getImages().getIngredients().getDisplay().getUrl() + "\n";
                     text.append(content);
                 }
-            }
             @Override
             public void onFailure(Call<ResponseObject> call, Throwable t) {
                 text.setText(t.getMessage());

@@ -44,6 +44,7 @@ public class ScannerActivity extends AppCompatActivity {
                 Bundle extras = new Bundle();
                 Date date = new Date();
                 extras.putString("barcode", result.getContents());
+                extras.putBoolean("scanned", true);
                 extras.putLong("time", date.getTime());
                 intent.putExtras(extras);
                 startActivity(intent);

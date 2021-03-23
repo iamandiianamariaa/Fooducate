@@ -3,22 +3,24 @@ package com.example.fooducate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -32,10 +34,23 @@ public class ProductInformationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference myRef;
     private String userID;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private MainAdapter adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_information);
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager = findViewById(R.id.view_pager);
+        adapter = new MainAdapter(getSupportFragmentManager());
+        adapter.addFragment(new One(),"Summary");
+        adapter.addFragment(new Two(),"Ingredients");
+        adapter.addFragment(new Three(),"Nutrition");
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("users");
@@ -60,7 +75,7 @@ public class ProductInformationActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseObject> call, Response<ResponseObject> response) {
                 if (!response.isSuccessful()) {
-                    text.setText("Code: " + response.code());
+                    //text.setText("Code: " + response.code());
                     return;
                 }
 
@@ -125,7 +140,7 @@ public class ProductInformationActivity extends AppCompatActivity {
                 }
             @Override
             public void onFailure(Call<ResponseObject> call, Throwable t) {
-                text.setText(t.getMessage());
+                //text.setText(t.getMessage());
             }
         });
 
@@ -135,5 +150,37 @@ public class ProductInformationActivity extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
+    }
+
+    private class MainAdapter extends FragmentPagerAdapter{
+        private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
+        private ArrayList<String> stringArrayList = new ArrayList<>();
+
+        public void addFragment(Fragment fragment, String s){
+            fragmentArrayList.add(fragment);
+            stringArrayList.add(s);
+
+        }
+        public MainAdapter(@NonNull FragmentManager fm) {
+            super(fm);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentArrayList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentArrayList.size();
+        }
+
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return stringArrayList.get(position);
+        }
     }
 }

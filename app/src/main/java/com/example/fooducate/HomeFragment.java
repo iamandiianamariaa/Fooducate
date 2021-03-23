@@ -24,6 +24,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class HomeFragment extends Fragment {
     private EditText searchText;
@@ -114,8 +115,11 @@ public class HomeFragment extends Fragment {
 
                     Intent intent = new Intent(getContext(), ProductInformationActivity.class);
                     Bundle extras = new Bundle();
+                    Date date = new Date();
                     extras.putString("barcode", barCode);
                     extras.putBoolean("scanned", true);
+                    extras.putLong("time", date.getTime());
+                    intent.putExtras(extras);
                     startActivity(intent);
                 }
                 else {

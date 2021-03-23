@@ -15,10 +15,6 @@ import com.squareup.picasso.Picasso;
 
 public class Summary extends Fragment {
     private ResponseObject object;
-    private TextView title;
-    private TextView brand;
-    private TextView quantity;
-    private ImageView productImg;
 
     public Summary(ResponseObject object) {
         this.object = object;
@@ -34,15 +30,34 @@ public class Summary extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.summary_fragment_layout, container, false);
 
-        title = view.findViewById(R.id.title);
-        brand = view.findViewById(R.id.brand);
-        quantity = view.findViewById(R.id.quantity);
-        productImg = view.findViewById(R.id.productimg);
+        TextView title = view.findViewById(R.id.title);
+        TextView brand = view.findViewById(R.id.brand);
+        TextView quantity = view.findViewById(R.id.quantity);
+        ImageView productImg = view.findViewById(R.id.productimg);
+        ImageView nutri = view.findViewById(R.id.nutri);
+        ImageView nova = view.findViewById(R.id.nova);
+        ImageView eco = view.findViewById(R.id.eco);
 
+        String nutriscore;
         String content = "";
         title.setText(object.getProduct().getName());
         brand.setText(object.getProduct().getCompany());
         Picasso.get().load(object.getProduct().getImages().getFront().getDisplay().getUrl()).into(productImg);
+
+        if(object.getProduct().getNutriscore() == null)
+            nutriscore = "nutri";
+        else nutriscore = "nutri_" + object.getProduct().getNutriscore();
+
+        int imageId = getResources().getIdentifier(nutriscore, "drawable", getContext().getPackageName());
+        nutri.setImageResource(imageId);
+
+        //if(object.getProduct().getNova())
+            nutriscore = "nutri";
+        //else nutriscore = "nutri_" + object.getProduct().getNutriscore();
+
+        imageId = getResources().getIdentifier(nutriscore, "drawable", getContext().getPackageName());
+        nova.setImageResource(imageId);
+
         if(object.getProduct().getIngredients()!=null)
             content += "Ingredients: " + object.getProduct().getIngredients() + "\n";
         quantity.setText(object.getProduct().getQuantity());

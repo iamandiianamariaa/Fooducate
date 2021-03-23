@@ -3,9 +3,7 @@ package com.example.fooducate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -111,36 +107,7 @@ public class ProductInformationActivity extends AppCompatActivity {
                 adapter.addFragment(new Three(),"Nutrition");
                 viewPager.setAdapter(adapter);
                 tabLayout.setupWithViewPager(viewPager);
-                    String content = "";
-                    content += "NAME: " + product.getProduct().getName()+ "\n";
-                    content += "COMPANY: " + product.getProduct().getCompany() + "\n";
-                    if(product.getProduct().getIngredients()!=null)
-                        content += "Ingredients: " + product.getProduct().getIngredients() + "\n";
-                    content += "QUANTITY: " + product.getProduct().getQuantity() + "\n";
-                    content += "SERVING SIZE: " + product.getProduct().getServing_size() + "\n";
-                    content += "NOVA: " + product.getProduct().getNova() + "\n";
-                    content += "NUTRISCORE: " + product.getProduct().getNutriscore() + "\n";
-                    if(product.getProduct().getEcoscore()!=null)
-                        content += "ECOSCORE: " + product.getProduct().getEcoscore() + "\n";
-                    if(product.getProduct().getAllergens()!=null)
-                        content += "ALLERGENS: " + product.getProduct().getAllergens() + "\n";
-//                    for(String elem : product.getProduct().getAdditives())
-//                        content += "ADDITIVES: " + elem + "\n";
-//                    for(String elem : product.getProduct().getLabels())
-//                        content += "LABELS: " + elem + "\n";
-//                    for(String elem : product.getProduct().getAnalysis())
-//                        content += "ANALYSIS: " + elem + "\n";
-                    if(product.getProduct().getLevels()!=null)
-                    {
-                        content += "FAT: " + product.getProduct().getLevels().getFat() + "\n";
-                        content += "SALT: " + product.getProduct().getLevels().getSalt() + "\n";
-                        content += "SUGAR: " + product.getProduct().getLevels().getSugars() + "\n";
-                        content += "SATURATED FAT: " + product.getProduct().getLevels().getSaturated_fat() + "\n";
-                    }
-                    content += "NUTRIMENTS: " + product.getProduct().getNutriments().getCarbo_100g() + "\n";
-                    content += "NUTRIMENTS: " + product.getProduct().getNutriments().getCarbo_serving() + "\n";
-                    //content += "IMAGES: " + product.getProduct().getImages().getIngredients().getDisplay().getUrl() + "\n";
-                    //text.append(content);
+
                 }
             @Override
             public void onFailure(Call<ResponseObject> call, Throwable t) {
@@ -150,43 +117,13 @@ public class ProductInformationActivity extends AppCompatActivity {
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                    Fragment selectedFragment = null;
-                    switch (item.getItemId()) {
-
-                        case R.id.home:
-                            selectedFragment = new HomeFragment();
-                            break;
-                        case R.id.history:
-                            selectedFragment = new HistoryFragment();
-                            break;
-                        case R.id.stats:
-                            selectedFragment = new ReportFragment();
-                            break;
-                        case R.id.profile:
-                            selectedFragment = new ProfileFragment();
-                            break;
-                    }
-                    if (selectedFragment != null)
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-
-                    return true;
-                }
-            };
-
-    public void onPressFab(View view){
-
-        startActivity(new Intent(this, ScannerActivity.class));
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
     }
 
-    @Override
-    public void onBackPressed() {
+    public void onBackButtonPressed(View view) {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
     }

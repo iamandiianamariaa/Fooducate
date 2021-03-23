@@ -4,15 +4,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.squareup.picasso.Picasso;
+
 public class Summary extends Fragment {
     private ResponseObject object;
-    private TextView text;
+    private TextView title;
+    private TextView brand;
+    private TextView quantity;
+    private ImageView productImg;
 
     public Summary(ResponseObject object) {
         this.object = object;
@@ -28,13 +34,18 @@ public class Summary extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.summary_fragment_layout, container, false);
 
-        text = view.findViewById(R.id.txt);
+        title = view.findViewById(R.id.title);
+        brand = view.findViewById(R.id.brand);
+        quantity = view.findViewById(R.id.quantity);
+        productImg = view.findViewById(R.id.productimg);
+
         String content = "";
-        content += "NAME: " + object.getProduct().getName()+ "\n";
-        content += "COMPANY: " + object.getProduct().getCompany() + "\n";
+        title.setText(object.getProduct().getName());
+        brand.setText(object.getProduct().getCompany());
+        Picasso.get().load(object.getProduct().getImages().getFront().getDisplay().getUrl()).into(productImg);
         if(object.getProduct().getIngredients()!=null)
             content += "Ingredients: " + object.getProduct().getIngredients() + "\n";
-        content += "QUANTITY: " + object.getProduct().getQuantity() + "\n";
+        quantity.setText(object.getProduct().getQuantity());
         content += "SERVING SIZE: " + object.getProduct().getServing_size() + "\n";
         content += "NOVA: " + object.getProduct().getNova() + "\n";
         content += "NUTRISCORE: " + object.getProduct().getNutriscore() + "\n";
@@ -58,8 +69,7 @@ public class Summary extends Fragment {
         }
         content += "NUTRIMENTS: " + object.getProduct().getNutriments().getCarbo_100g() + "\n";
         content += "NUTRIMENTS: " + object.getProduct().getNutriments().getCarbo_serving() + "\n";
-        //content += "IMAGES: " + product.getProduct().getImages().getIngredients().getDisplay().getUrl() + "\n";
-        text.append(content);
+        //text.append(content);
         return view;
     }
 }

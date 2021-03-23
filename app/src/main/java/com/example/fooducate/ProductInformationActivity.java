@@ -3,6 +3,8 @@ package com.example.fooducate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,11 +48,7 @@ public class ProductInformationActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         adapter = new MainAdapter(getSupportFragmentManager());
-        adapter.addFragment(new One(),"Summary");
-        adapter.addFragment(new Two(),"Ingredients");
-        adapter.addFragment(new Three(),"Nutrition");
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -57,7 +56,7 @@ public class ProductInformationActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
 
-        TextView text = findViewById(R.id.txt);
+        //TextView text = findViewById(R.id.txt);
 
         Bundle b = getIntent().getExtras();
         String id = b.getString("barcode");
@@ -107,6 +106,11 @@ public class ProductInformationActivity extends AppCompatActivity {
                     }
                 }
 
+                adapter.addFragment(new Summary(product),"Summary");
+                adapter.addFragment(new Two(),"Ingredients");
+                adapter.addFragment(new Three(),"Nutrition");
+                viewPager.setAdapter(adapter);
+                tabLayout.setupWithViewPager(viewPager);
                     String content = "";
                     content += "NAME: " + product.getProduct().getName()+ "\n";
                     content += "COMPANY: " + product.getProduct().getCompany() + "\n";
@@ -136,7 +140,7 @@ public class ProductInformationActivity extends AppCompatActivity {
                     content += "NUTRIMENTS: " + product.getProduct().getNutriments().getCarbo_100g() + "\n";
                     content += "NUTRIMENTS: " + product.getProduct().getNutriments().getCarbo_serving() + "\n";
                     //content += "IMAGES: " + product.getProduct().getImages().getIngredients().getDisplay().getUrl() + "\n";
-                    text.append(content);
+                    //text.append(content);
                 }
             @Override
             public void onFailure(Call<ResponseObject> call, Throwable t) {
@@ -144,6 +148,41 @@ public class ProductInformationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    Fragment selectedFragment = null;
+                    switch (item.getItemId()) {
+
+                        case R.id.home:
+                            selectedFragment = new HomeFragment();
+                            break;
+                        case R.id.history:
+                            selectedFragment = new HistoryFragment();
+                            break;
+                        case R.id.stats:
+                            selectedFragment = new ReportFragment();
+                            break;
+                        case R.id.profile:
+                            selectedFragment = new ProfileFragment();
+                            break;
+                    }
+                    if (selectedFragment != null)
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+
+                    return true;
+                }
+            };
+
+    public void onPressFab(View view){
+
+        startActivity(new Intent(this, ScannerActivity.class));
+        finish();
     }
 
     @Override

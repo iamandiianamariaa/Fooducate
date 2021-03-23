@@ -38,7 +38,7 @@ public class Summary extends Fragment {
         ImageView nova = view.findViewById(R.id.nova);
         ImageView eco = view.findViewById(R.id.eco);
 
-        String nutriscore;
+        String nutriscore, novascore, ecoscore;
         String content = "";
         title.setText(object.getProduct().getName());
         brand.setText(object.getProduct().getCompany());
@@ -51,12 +51,19 @@ public class Summary extends Fragment {
         int imageId = getResources().getIdentifier(nutriscore, "drawable", getContext().getPackageName());
         nutri.setImageResource(imageId);
 
-        //if(object.getProduct().getNova())
-            nutriscore = "nutri";
-        //else nutriscore = "nutri_" + object.getProduct().getNutriscore();
+        if(object.getProduct().getNova()==0)
+            novascore = "nova";
+        else novascore = "nova_" + object.getProduct().getNova();
 
-        imageId = getResources().getIdentifier(nutriscore, "drawable", getContext().getPackageName());
+        imageId = getResources().getIdentifier(novascore, "drawable", getContext().getPackageName());
         nova.setImageResource(imageId);
+
+        if(object.getProduct().getEcoscore()==null)
+            ecoscore = "ecoscore";
+        else ecoscore = "eco_" + object.getProduct().getEcoscore();
+
+        imageId = getResources().getIdentifier(ecoscore, "drawable", getContext().getPackageName());
+        eco.setImageResource(imageId);
 
         if(object.getProduct().getIngredients()!=null)
             content += "Ingredients: " + object.getProduct().getIngredients() + "\n";
@@ -64,7 +71,6 @@ public class Summary extends Fragment {
         content += "SERVING SIZE: " + object.getProduct().getServing_size() + "\n";
         content += "NOVA: " + object.getProduct().getNova() + "\n";
         content += "NUTRISCORE: " + object.getProduct().getNutriscore() + "\n";
-        System.out.println(object.getProduct().getBarcode());
         if(object.getProduct().getEcoscore()!=null)
             content += "ECOSCORE: " + object.getProduct().getEcoscore() + "\n";
         if(object.getProduct().getAllergens()!=null)

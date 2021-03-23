@@ -44,7 +44,7 @@
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="200dp"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_marginStart="28dp"
                         android:layout_marginLeft="28dp"
                         android:layout_marginTop="40dp"
@@ -98,8 +98,8 @@
 
             <ImageView
                 android:id="@+id/nutri"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="28dp"
@@ -108,22 +108,22 @@
 
             <ImageView
                 android:id="@+id/nova"
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="28dp"
-                app:layout_constraintStart_toEndOf="@+id/eco"
+                android:layout_marginTop="36dp"
+                app:layout_constraintStart_toEndOf="@+id/nutri"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
             <ImageView
                 android:id="@+id/eco"
-                android:layout_width="120dp"
-                android:layout_height="60dp"
+                android:layout_width="100dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="28dp"
-                app:layout_constraintStart_toEndOf="@+id/nutri"
+                app:layout_constraintStart_toEndOf="@+id/nova"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

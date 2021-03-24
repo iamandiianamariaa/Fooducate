@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,6 +46,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
     private String userID;
     private ArrayList<HistoryModel> products;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,6 +63,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void Recycler() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -80,6 +86,8 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
                         products.add(new HistoryModel(obj.getObject().getProduct().getName(),obj.getObject().getProduct().getCompany(),obj.getObject().getProduct().getImages().getFront().getDisplay().getUrl(),imageId, obj.getScanDate(), obj.getObject().getProduct().getBarcode()));
                     else
                         products.add(new HistoryModel(obj.getObject().getProduct().getName(),obj.getObject().getProduct().getCompany(),"http://www.essdetbol.ru/images/no_photo.png",imageId, obj.getScanDate(), obj.getObject().getProduct().getBarcode()));
+                    products.sort(Comparator.comparing(HistoryModel::getScanDate, Comparator.reverseOrder()));
+
 
                 }
                 adapter.notifyDataSetChanged();

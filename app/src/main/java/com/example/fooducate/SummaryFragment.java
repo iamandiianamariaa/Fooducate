@@ -15,14 +15,14 @@ import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
 
-public class Summary extends Fragment {
+public class SummaryFragment extends Fragment {
     private ResponseObject object;
 
-    public Summary(ResponseObject object) {
+    public SummaryFragment(ResponseObject object) {
         this.object = object;
     }
 
-    public Summary(int contentLayoutId, ResponseObject object) {
+    public SummaryFragment(int contentLayoutId, ResponseObject object) {
         super(contentLayoutId);
         this.object = object;
     }
@@ -44,7 +44,9 @@ public class Summary extends Fragment {
         String content = "";
         title.setText(object.getProduct().getName());
         brand.setText(object.getProduct().getCompany());
-        Picasso.get().load(object.getProduct().getImages().getFront().getDisplay().getUrl()).into(productImg);
+
+        if(object.getProduct().getImages()!=null && object.getProduct().getImages().getFront()!=null)
+            Picasso.get().load(object.getProduct().getImages().getFront().getDisplay().getUrl()).into(productImg);
 
         if(object.getProduct().getNutriscore() == null)
             nutriscore = "nutri";

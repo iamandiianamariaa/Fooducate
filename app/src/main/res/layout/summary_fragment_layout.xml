@@ -89,7 +89,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/home"
+                        android:src="@drawable/no_photo"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"

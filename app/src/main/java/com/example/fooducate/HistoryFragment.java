@@ -76,7 +76,11 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
                     else nutriscore = "nutri_" + obj.getObject().getProduct().getNutriscore();
 
                     int imageId = getResources().getIdentifier(nutriscore, "drawable", getContext().getPackageName());
-                    products.add(new HistoryModel(obj.getObject().getProduct().getName(),obj.getObject().getProduct().getCompany(),obj.getObject().getProduct().getImages().getFront().getDisplay().getUrl(),imageId, obj.getScanDate(), obj.getObject().getProduct().getBarcode()));
+                    if(obj.getObject().getProduct().getImages()!=null && obj.getObject().getProduct().getImages().getFront()!=null)
+                        products.add(new HistoryModel(obj.getObject().getProduct().getName(),obj.getObject().getProduct().getCompany(),obj.getObject().getProduct().getImages().getFront().getDisplay().getUrl(),imageId, obj.getScanDate(), obj.getObject().getProduct().getBarcode()));
+                    else
+                        products.add(new HistoryModel(obj.getObject().getProduct().getName(),obj.getObject().getProduct().getCompany(),"http://www.essdetbol.ru/images/no_photo.png",imageId, obj.getScanDate(), obj.getObject().getProduct().getBarcode()));
+
                 }
                 adapter.notifyDataSetChanged();
             }

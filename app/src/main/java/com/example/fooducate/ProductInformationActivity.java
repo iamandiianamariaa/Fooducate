@@ -104,7 +104,7 @@ public class ProductInformationActivity extends AppCompatActivity {
 
                 adapter.addFragment(new SummaryFragment(product),"Summary");
                 adapter.addFragment(new IngredientsFragment(product),"Ingredients");
-                adapter.addFragment(new Three(),"Nutrition");
+                adapter.addFragment(new NutritionFragment(product),"Nutrition");
                 viewPager.setAdapter(adapter);
                 tabLayout.setupWithViewPager(viewPager);
 

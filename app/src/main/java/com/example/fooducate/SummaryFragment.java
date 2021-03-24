@@ -40,7 +40,7 @@ public class SummaryFragment extends Fragment {
         ImageView nova = view.findViewById(R.id.nova);
         ImageView eco = view.findViewById(R.id.eco);
 
-        String nutriscore, novascore, ecoscore;
+        String nutriscore, novascore, ecoscore, text = "";
         String content = "";
         title.setText(object.getProduct().getName());
         brand.setText(object.getProduct().getCompany());
@@ -74,7 +74,10 @@ public class SummaryFragment extends Fragment {
         setLevelColor(level, cardView);
 
         TextView textView = view.findViewById(R.id.fatvalue);
-        String text = object.getProduct().getNutriments().getFat_100g() + " g Fat"+"\n"+"in "+level+" quantity";
+        if(level!=null)
+            text = object.getProduct().getNutriments().getFat_100g() + " g Fat"+"\n"+"in "+level+" quantity";
+        else
+            text = object.getProduct().getNutriments().getFat_100g() + " g Fat"+"\n";
         textView.setText(text);
 
         level = object.getProduct().getLevels().getSaturated_fat();
@@ -82,7 +85,9 @@ public class SummaryFragment extends Fragment {
         setLevelColor(level, cardView);
 
         textView = view.findViewById(R.id.transvalue);
-        text = object.getProduct().getNutriments().getSaturated_fat_100g() + " g Saturated fat"+"\n"+"in "+level+" quantity";
+        if(level!=null)
+            text = object.getProduct().getNutriments().getSaturated_fat_100g() + " g Saturated fat"+"\n"+"in "+level+" quantity";
+        else text = object.getProduct().getNutriments().getSaturated_fat_100g() + " g Saturated fat"+"\n";
         textView.setText(text);
 
         level = object.getProduct().getLevels().getSugars();
@@ -90,7 +95,10 @@ public class SummaryFragment extends Fragment {
         setLevelColor(level, cardView);
 
         textView = view.findViewById(R.id.sugarvalue);
-        text = object.getProduct().getNutriments().getSugars_100g() + " g Sugars"+"\n"+"in "+level+" quantity";
+        if(level!=null)
+            text = object.getProduct().getNutriments().getSugars_100g() + " g Sugars"+"\n"+"in "+level+" quantity";
+        else
+            text = object.getProduct().getNutriments().getSugars_100g() + " g Sugars"+"\n";
         textView.setText(text);
 
         level = object.getProduct().getLevels().getSalt();
@@ -98,7 +106,10 @@ public class SummaryFragment extends Fragment {
         setLevelColor(level, cardView);
 
         textView = view.findViewById(R.id.saltvalue);
-        text = object.getProduct().getNutriments().getSalt_100g() + " g Salt"+"\n"+"in "+level+" quantity";
+        if (level!=null)
+            text = object.getProduct().getNutriments().getSalt_100g() + " g Salt"+"\n"+"in "+level+" quantity";
+        else
+            text = object.getProduct().getNutriments().getSalt_100g() + " g Salt"+"\n";
         textView.setText(text);
 
 

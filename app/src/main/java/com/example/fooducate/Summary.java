@@ -1,5 +1,6 @@
 package com.example.fooducate;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
@@ -65,14 +67,43 @@ public class Summary extends Fragment {
         imageId = getResources().getIdentifier(ecoscore, "drawable", getContext().getPackageName());
         eco.setImageResource(imageId);
 
+        String level = object.getProduct().getLevels().getFat();
+        CardView cardView = view.findViewById(R.id.fat);
+        setLevelColor(level, cardView);
+
+        TextView textView = view.findViewById(R.id.fatvalue);
+        String text = object.getProduct().getNutriments().getFat_100g() + " g Fat"+"\n"+"in "+level+" quantity";
+        textView.setText(text);
+
+        level = object.getProduct().getLevels().getSaturated_fat();
+        cardView = view.findViewById(R.id.trans);
+        setLevelColor(level, cardView);
+
+        textView = view.findViewById(R.id.transvalue);
+        text = object.getProduct().getNutriments().getSaturated_fat_100g() + " g Saturated fat"+"\n"+"in "+level+" quantity";
+        textView.setText(text);
+
+        level = object.getProduct().getLevels().getSugars();
+        cardView = view.findViewById(R.id.sugar);
+        setLevelColor(level, cardView);
+
+        textView = view.findViewById(R.id.sugarvalue);
+        text = object.getProduct().getNutriments().getSugars_100g() + " g Sugars"+"\n"+"in "+level+" quantity";
+        textView.setText(text);
+
+        level = object.getProduct().getLevels().getSalt();
+        cardView = view.findViewById(R.id.salt);
+        setLevelColor(level, cardView);
+
+        textView = view.findViewById(R.id.saltvalue);
+        text = object.getProduct().getNutriments().getSalt_100g() + " g Salt"+"\n"+"in "+level+" quantity";
+        textView.setText(text);
+
+
+
         if(object.getProduct().getIngredients()!=null)
             content += "Ingredients: " + object.getProduct().getIngredients() + "\n";
         quantity.setText(object.getProduct().getQuantity());
-        content += "SERVING SIZE: " + object.getProduct().getServing_size() + "\n";
-        content += "NOVA: " + object.getProduct().getNova() + "\n";
-        content += "NUTRISCORE: " + object.getProduct().getNutriscore() + "\n";
-        if(object.getProduct().getEcoscore()!=null)
-            content += "ECOSCORE: " + object.getProduct().getEcoscore() + "\n";
         if(object.getProduct().getAllergens()!=null)
             content += "ALLERGENS: " + object.getProduct().getAllergens() + "\n";
 //                    for(String elem : product.getProduct().getAdditives())
@@ -81,16 +112,24 @@ public class Summary extends Fragment {
 //                        content += "LABELS: " + elem + "\n";
 //                    for(String elem : product.getProduct().getAnalysis())
 //                        content += "ANALYSIS: " + elem + "\n";
-        if(object.getProduct().getLevels()!=null)
-        {
-            content += "FAT: " + object.getProduct().getLevels().getFat() + "\n";
-            content += "SALT: " + object.getProduct().getLevels().getSalt() + "\n";
-            content += "SUGAR: " + object.getProduct().getLevels().getSugars() + "\n";
-            content += "SATURATED FAT: " + object.getProduct().getLevels().getSaturated_fat() + "\n";
-        }
-        content += "NUTRIMENTS: " + object.getProduct().getNutriments().getCarbo_100g() + "\n";
-        content += "NUTRIMENTS: " + object.getProduct().getNutriments().getCarbo_serving() + "\n";
         //text.append(content);
         return view;
+    }
+
+    public void setLevelColor(String level, CardView cardView) {
+
+        if (level != null) {
+            switch (level) {
+                case "low":
+                    cardView.setCardBackgroundColor(Color.parseColor("#50c878"));
+                    break;
+                case "moderate":
+                    cardView.setCardBackgroundColor(Color.parseColor("#f0e130"));
+                    break;
+                case "high":
+                    cardView.setCardBackgroundColor(Color.parseColor("#cf352e"));
+                    break;
+            }
+        }
     }
 }

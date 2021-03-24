@@ -31,6 +31,8 @@ public class IngredientsFragment extends Fragment {
         ImageView image = view.findViewById(R.id.ingredientsimg);
         ImageView nova = view.findViewById(R.id.nova);
         TextView novaScore = view.findViewById(R.id.novascore);
+        TextView ingredients = view.findViewById(R.id.ingredients);
+
         if(object.getProduct().getImages()!=null && object.getProduct().getImages().getIngredients()!=null)
             Picasso.get().load(object.getProduct().getImages().getIngredients().getDisplay().getUrl()).into(image);
 
@@ -59,6 +61,12 @@ public class IngredientsFragment extends Fragment {
         novaScore.setText(text);
         int imageId = getResources().getIdentifier(novascore, "drawable", getContext().getPackageName());
         nova.setImageResource(imageId);
+
+        if(object.getProduct().getIngredients()!=null)
+            text = "Ingredients: " + object.getProduct().getIngredients();
+        if (object.getProduct().getAllergens()!=null)
+            text+="\n" + "\n" + "Allergens: "+object.getProduct().getAllergens();
+        ingredients.setText(text);
         return view;
     }
 }

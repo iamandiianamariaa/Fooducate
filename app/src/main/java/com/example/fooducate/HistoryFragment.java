@@ -1,6 +1,7 @@
 package com.example.fooducate;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -40,11 +41,9 @@ import java.util.TimerTask;
 public class HistoryFragment extends Fragment implements HistoryAdapter.OnProductListener {
     private RecyclerView recyclerView;
     private HistoryAdapter adapter;
-    private FirebaseDatabase mFirebaseDatabase;
-    private FirebaseAuth mAuth;
     private DatabaseReference myRef;
-    private String userID;
     private ArrayList<HistoryModel> products;
+    private Context context;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
@@ -52,11 +51,12 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.history_fragment_layout, container, false);
 
+        context = container.getContext();
         recyclerView = view.findViewById(R.id.recyclerViewHistory);
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        userID = user.getUid();
+        String userID = user.getUid();
         myRef = mFirebaseDatabase.getReference("users").child(userID);
         showProgressDialog();
         Recycler();
@@ -81,7 +81,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
                         nutriscore = "nutri";
                     else nutriscore = "nutri_" + obj.getObject().getProduct().getNutriscore();
 
-                    int imageId = getResources().getIdentifier(nutriscore, "drawable", getContext().getPackageName());
+                    int imageId = getResources().getIdentifier(nutriscore, "drawable", context.getPackageName());
                     if(obj.getObject().getProduct().getImages()!=null && obj.getObject().getProduct().getImages().getFront()!=null)
                         products.add(new HistoryModel(obj.getObject().getProduct().getName(),obj.getObject().getProduct().getCompany(),obj.getObject().getProduct().getImages().getFront().getDisplay().getUrl(),imageId, obj.getScanDate(), obj.getObject().getProduct().getBarcode()));
                     else

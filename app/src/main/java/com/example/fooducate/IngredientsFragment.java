@@ -64,8 +64,12 @@ public class IngredientsFragment extends Fragment {
 
         if(object.getProduct().getIngredients()!=null)
             text = "Ingredients: " + object.getProduct().getIngredients();
+        text+="\n" + "\n" + "Allergens: ";
         if (object.getProduct().getAllergens()!=null)
-            text+="\n" + "\n" + "Allergens: "+object.getProduct().getAllergens();
+        {
+            for(String elem : object.getProduct().getAllergens())
+                text+=elem.substring(3) + ", ";
+        }
         ingredients.setText(text);
         return view;
     }

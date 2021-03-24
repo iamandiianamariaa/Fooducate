@@ -32,8 +32,8 @@ public class Product {
     @SerializedName("ingredients_text")
     private String ingredients;
 
-    @SerializedName("allergens")
-    private String allergens;
+    @SerializedName("allergens_tags")
+    private List<String> allergens;
 
     @SerializedName("additives_tags")
     private List<String> additives;
@@ -109,11 +109,11 @@ public class Product {
         this.ingredients = ingredients;
     }
 
-    public String getAllergens() {
+    public List<String> getAllergens() {
         return allergens;
     }
 
-    public void setAllergens(String allergens) {
+    public void setAllergens(List<String> allergens) {
         this.allergens = allergens;
     }
 

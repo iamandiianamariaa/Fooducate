@@ -64,11 +64,19 @@ public class IngredientsFragment extends Fragment {
 
         if(object.getProduct().getIngredients()!=null)
             text = "Ingredients: " + object.getProduct().getIngredients();
-        text+="\n" + "\n" + "Allergens: ";
         if (object.getProduct().getAllergens()!=null)
         {
+            text+="\n" + "\n" + "Allergens: ";
             for(String elem : object.getProduct().getAllergens())
                 text+=elem.substring(3) + ", ";
+            text = text.substring(0, text.length() - 2);
+        }
+
+        if(object.getProduct().getAdditives()!=null){
+            text+= "\n" + "\n" + "Additives: ";
+            for(String elem : object.getProduct().getAdditives())
+                text+=elem.substring(3) + ", ";
+            text = text.substring(0, text.length() - 2);
         }
         ingredients.setText(text);
         return view;

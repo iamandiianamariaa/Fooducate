@@ -29,8 +29,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductInformationActivity extends AppCompatActivity {
-    private FirebaseDatabase mFirebaseDatabase;
-    private FirebaseAuth mAuth;
     private DatabaseReference myRef;
     private String userID;
     private TabLayout tabLayout;
@@ -46,8 +44,8 @@ public class ProductInformationActivity extends AppCompatActivity {
         adapter = new MainAdapter(getSupportFragmentManager());
 
 
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference("users");
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();

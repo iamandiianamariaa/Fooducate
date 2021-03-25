@@ -37,7 +37,6 @@ public class SummaryFragment extends Fragment {
         TextView labels = view.findViewById(R.id.labels);
 
         String nutriscore, novascore, ecoscore, text = "";
-        String content = "";
         title.setText(object.getProduct().getName());
         brand.setText(object.getProduct().getCompany());
 
@@ -120,13 +119,6 @@ public class SummaryFragment extends Fragment {
             labels.setText(text);
         }
 
-//                    for(String elem : product.getProduct().getAdditives())
-//                        content += "ADDITIVES: " + elem + "\n";
-//                    for(String elem : product.getProduct().getLabels())
-//                        content += "LABELS: " + elem + "\n";
-//                    for(String elem : product.getProduct().getAnalysis())
-//                        content += "ANALYSIS: " + elem + "\n";
-        //text.append(content);
         return view;
     }
 

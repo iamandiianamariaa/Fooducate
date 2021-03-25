@@ -24,16 +24,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class HomeFragment extends Fragment {
     private EditText searchText;
-    private Button button;
     private ViewPager viewPager;
-    private ArrayList<SwipeModel> modelArrayList;
-    private Adapter adapter;
     private RecyclerView recommendationRecycler;
-    private RecyclerView.Adapter recycleAdapter;
 
     RecyclerView rvArticles;
     HomeAdapter mAdapter;
@@ -46,7 +43,7 @@ public class HomeFragment extends Fragment {
         searchText = view.findViewById(R.id.search_bar);
         recommendationRecycler = view.findViewById(R.id.featured_recycler);
 
-        button = view.findViewById(R.id.sbutton);
+        Button button = view.findViewById(R.id.sbutton);
 
         rvArticles = view.findViewById(R.id.rvArticles);
         rvArticles.setHasFixedSize(true);
@@ -138,16 +135,57 @@ public class HomeFragment extends Fragment {
 
         ArrayList<RecommendationHelperClass> recommendations = new ArrayList<>();
 
-        recommendations.add(new RecommendationHelperClass(R.drawable.sleep, "Mcdonald's", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas"));
-        recommendations.add(new RecommendationHelperClass(R.drawable.home, "Edenrobe", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas"));
-        recommendations.add(new RecommendationHelperClass(R.drawable.water_consumption, "Walmart", "asbkd asudhlasn saudnas jasdjasl hisajdl asjdlnas"));
+        Calendar cal = Calendar.getInstance();
 
-        recycleAdapter = new RecommendationAdapter(recommendations);
+        if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY){
+
+            recommendations.add(new RecommendationHelperClass(R.drawable.avocado, "Avocado", "Avocados are different than most fruits because they are loaded with healthy fats instead of carbs."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.blueberry, "Blueberries", "Blueberries are not only delicious but also among the most powerful sources of antioxidants in the world."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.banana, "Banana", "Bananas are among the world’s best sources of potassium. They’re also high in vitamin B6 and fiber."));
+        }
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY){
+
+            recommendations.add(new RecommendationHelperClass(R.drawable.almond, "Almonds", "Almonds are a popular nut loaded with vitamin E, antioxidants, magnesium, and fiber."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.chia, "Chia seeds", "Chia seeds are among the most nutrient-dense foods on the planet."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.macadamia, "Macadamia nuts", "Macadamia nuts are much higher in monounsaturated fats and lower in omega-6."));
+        }
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY){
+
+            recommendations.add(new RecommendationHelperClass(R.drawable.broccoli, "Broccoli", "It’s an excellent source of fiber and vitamins C, K and contains a decent amount of protein compared with other vegetables."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.carrot, "Carrots", "They are loaded with nutrients like fiber, vitamin K and carotene antioxidants."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.garlic, "Garlic", "It contains bioactive organosulfur compounds that improve immune function."));
+        }
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY){
+
+            recommendations.add(new RecommendationHelperClass(R.drawable.salmon, "Salmon", "Salmon is a type of oily fish containing high amount of nutrients, including protein and omega-3 fatty acids."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.sardines, "Sardines", "Sardines are small, oily fish that are among the most nutritious foods you can eat."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.shrimp, "Shrimps", "They are low in fat, high in protein and also loaded with selenium and vitamin B12."));
+        }
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){
+
+            recommendations.add(new RecommendationHelperClass(R.drawable.oat, "Oats", "Whole oats are the only food source of avenanthramides, a unique group of antioxidants believed to protect against heart disease."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.rice, "Brown rice", "Brown rice is fairly nutritious, with a decent amount of fiber, vitamin B1, and magnesium."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.quinoa, "Quinoa", "It’s a tasty grain high in fiber and magnesium and an excellent source of plant-based protein."));
+        }
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
+
+            recommendations.add(new RecommendationHelperClass(R.drawable.milk, "Whole milk", "Whole milk is very high in vitamins, minerals, healthy fats and is one of the best dietary sources of calcium."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.yoghurt, "Yogurt", "It has the same health effects as milk, but yogurt with live cultures has the added benefit of friendly probiotic bacteria."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.oil, "Extra virgin olive oil", "It is one of the healthiest vegetable oils you can find."));
+        }
+        else{
+
+            recommendations.add(new RecommendationHelperClass(R.drawable.potato, "Sweet Potatoes", "Sweet potatoes contain beta-carotene, which protects against diseases like cancer and heart disease."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.spinach, "Spinach", "It's loaded with iron, folate, beta carotene, lutein and has double the fiber of most other leafy greens."));
+            recommendations.add(new RecommendationHelperClass(R.drawable.kiwi, "Kiwi", "Kiwis have about twice as much of the vitamin C as oranges. They are also an excellent source of potassium and phytonutrients."));
+        }
+
+        RecyclerView.Adapter recycleAdapter = new RecommendationAdapter(recommendations);
         recommendationRecycler.setAdapter(recycleAdapter);
     }
 
     private void loadCards(){
-        modelArrayList = new ArrayList<>();
+        ArrayList<SwipeModel> modelArrayList = new ArrayList<>();
 
         modelArrayList.add(new SwipeModel(
                 "Don't forget to drink water",
@@ -172,7 +210,7 @@ public class HomeFragment extends Fragment {
                 R.drawable.sugar
         ));
 
-        adapter = new Adapter(getContext(), modelArrayList);
+        Adapter adapter = new Adapter(getContext(), modelArrayList);
         viewPager.setAdapter(adapter);
     }
 }

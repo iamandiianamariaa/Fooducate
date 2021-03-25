@@ -22,11 +22,6 @@ public class SummaryFragment extends Fragment {
         this.object = object;
     }
 
-    public SummaryFragment(int contentLayoutId, ResponseObject object) {
-        super(contentLayoutId);
-        this.object = object;
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

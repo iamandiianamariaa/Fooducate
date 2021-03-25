@@ -20,10 +20,6 @@ public class IngredientsFragment extends Fragment {
         this.object = object;
     }
 
-    public IngredientsFragment(int contentLayoutId, ResponseObject object) {
-        super(contentLayoutId);
-        this.object = object;
-    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

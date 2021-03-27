@@ -46,7 +46,8 @@ public class NutriscoreChartFragment extends Fragment {
         piechart.setHoleColor(Color.WHITE);
         piechart.setTransparentCircleRadius(61f);
 
-        piechart.setCenterText("Nutriscore report based on your scanned products");
+        piechart.setCenterText("Nutriscore report");
+        piechart.setCenterTextSize(20);
         piechart.setCenterTextColor(Color.BLACK);
 
         ArrayList<PieEntry> values = new ArrayList<>();
@@ -89,7 +90,7 @@ public class NutriscoreChartFragment extends Fragment {
             colors.add(ContextCompat.getColor(getContext(), R.color.bright_red));
         }
 
-        PieDataSet pieDataSet = new PieDataSet(values, "Nutriscore report based on your scanned products");
+        PieDataSet pieDataSet = new PieDataSet(values, "Nutriscore report");
 
         pieDataSet.setColors(colors);
         pieDataSet.setSliceSpace(3f);

@@ -18,6 +18,7 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class NutrientsChartFragment extends Fragment {
         PieChart piechart = view.findViewById(R.id.chart1);
         piechart.setUsePercentValues(true);
         piechart.getDescription().setEnabled(false);
-        piechart.setExtraOffsets(0, -100, 0, 0);
+        piechart.setExtraOffsets(0, 0, 0, -50);
 
         piechart.setDragDecelerationFrictionCoef(0.99f);
 
@@ -46,36 +47,65 @@ public class NutrientsChartFragment extends Fragment {
         piechart.setHoleColor(Color.WHITE);
         piechart.setTransparentCircleRadius(61f);
 
-        piechart.setCenterText("Nutrients report based on your scanned products");
+        piechart.setCenterText("Nutrients report");
+        piechart.setCenterTextSize(20);
         piechart.setCenterTextColor(Color.BLACK);
+
         ArrayList<PieEntry> values = new ArrayList<>();
+        ArrayList<Integer> colorsLegend = new ArrayList<Integer>();
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+        colorsLegend.add(Color.parseColor("#FF555E"));
+        colorsLegend.add(Color.parseColor("#FF8650"));
+        colorsLegend.add(Color.parseColor("#FFE981"));
+        colorsLegend.add(Color.parseColor("#8BF18B"));
+        colorsLegend.add(Color.parseColor("#83B2FF"));
+        colorsLegend.add(Color.parseColor("#9B6EF3"));
+
         if (hashMap.get("Fat") != null)
+        {
             values.add(new PieEntry(hashMap.get("Fat"), labelArray[0]));
+            colors.add(Color.parseColor("#FF5553"));
+        }
 
         if (hashMap.get("Saturated") != null)
+        {
             values.add(new PieEntry(hashMap.get("Saturated"), labelArray[1]));
+            colors.add(Color.parseColor("#FF8650"));
+        }
 
         if (hashMap.get("Sugars") != null)
+        {
             values.add(new PieEntry(hashMap.get("Sugars"), labelArray[2]));
+            colors.add(Color.parseColor("#FFE981"));
+        }
 
         if (hashMap.get("Carbs") != null)
+        {
             values.add(new PieEntry(hashMap.get("Carbs"), labelArray[3]));
+            colors.add(Color.parseColor("#8BF18B"));
+        }
 
         if (hashMap.get("Sodium") != null)
+        {
             values.add(new PieEntry(hashMap.get("Sodium"), labelArray[4]));
+            colors.add(Color.parseColor("#83B2FF"));
+        }
         if (hashMap.get("Salt") != null)
+        {
             values.add(new PieEntry(hashMap.get("Salt"), labelArray[5]));
+            colorsLegend.add(Color.parseColor("#9B6EF3"));
+        }
 
-        PieDataSet pieDataSet = new PieDataSet(values, "Nutrients report based on your scanned products");
+        PieDataSet pieDataSet = new PieDataSet(values, "Nutrients report");
 
         pieDataSet.setSliceSpace(3f);
         pieDataSet.setSelectionShift(5f);
-
+        pieDataSet.setColors(colors);
 
         Legend l = piechart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
         l.setDrawInside(false);
         l.setEnabled(true);
         l.setTextColor(Color.GRAY);
@@ -88,6 +118,7 @@ public class NutrientsChartFragment extends Fragment {
         {
             LegendEntry entry = new LegendEntry();
             entry.label = labelArray[i];
+            entry.formColor = colorsLegend.get(i);
             legendEntries[i]=entry;
         }
 

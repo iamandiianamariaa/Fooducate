@@ -20,11 +20,14 @@ import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class NovascoreChartFragment extends Fragment {
+    private HashMap<Integer, Integer> hashMap;
 
-    public NovascoreChartFragment() {
+    public NovascoreChartFragment(HashMap<Integer, Integer> hashMap) {
+        this.hashMap = hashMap;
     }
     @Nullable
     @Override
@@ -42,10 +45,10 @@ public class NovascoreChartFragment extends Fragment {
         });
 
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("1", 6371664));
-        data.add(new ValueDataEntry("2", 789622));
-        data.add(new ValueDataEntry("3", 7216301));
-        data.add(new ValueDataEntry("4", 1486621));
+        data.add(new ValueDataEntry("1", hashMap.get(1)));
+        data.add(new ValueDataEntry("2", hashMap.get(2)));
+        data.add(new ValueDataEntry("3", hashMap.get(3)));
+        data.add(new ValueDataEntry("4", hashMap.get(4)));
 
         pie.data(data);
 

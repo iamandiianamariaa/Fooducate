@@ -13,28 +13,74 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 
 public class ReportFragment extends Fragment {
-
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private MainAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.reports_fragment_layout, container, false);
-        tabLayout = view.findViewById(R.id.tab_layout);
-        viewPager = view.findViewById(R.id.view_pager);
-        adapter = new MainAdapter(getFragmentManager());
+        TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+        ViewPager viewPager = view.findViewById(R.id.view_pager);
+        MainAdapter adapter = new MainAdapter(getFragmentManager());
+        HashMap<String, Integer> nutriMap = new HashMap<String, Integer>();
+        HashMap<Integer, Integer> novaMap = new HashMap<Integer, Integer>();
 
-        adapter.addFragment(new NutriscoreChartFragment(),"Nutriscore");
-        adapter.addFragment(new NovascoreChartFragment(),"Novascore");
-        adapter.addFragment(new NutrientsChartFragment(),"Nutrients");
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userID = user.getUid();
+        DatabaseReference myRef = mFirebaseDatabase.getReference("users").child(userID);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    FirebaseModel obj = dataSnapshot.getValue(FirebaseModel.class);
+
+                    if (obj.getObject().getProduct().getNutriscore() != null) {
+
+                        Integer score = nutriMap.get(obj.getObject().getProduct().getNutriscore());
+                        if (score == null)
+                            nutriMap.put(obj.getObject().getProduct().getNutriscore(), 1);
+                        else
+                            nutriMap.put(obj.getObject().getProduct().getNutriscore(), ++score);
+                }
+                    if (obj.getObject().getProduct().getNova() != 0) {
+
+                        Integer score = novaMap.get(obj.getObject().getProduct().getNova());
+                        if (score == null)
+                            novaMap.put(obj.getObject().getProduct().getNova(), 1);
+                        else
+                            novaMap.put(obj.getObject().getProduct().getNova(), ++score);
+                    }
+
+                }
+                adapter.notifyDataSetChanged();
+                adapter.addFragment(new NutriscoreChartFragment(nutriMap),"Nutriscore");
+                adapter.addFragment(new NovascoreChartFragment(novaMap),"Novascore");
+                adapter.addFragment(new NutrientsChartFragment(),"Nutrients");
+                viewPager.setAdapter(adapter);
+                tabLayout.setupWithViewPager(viewPager);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         return view;
     }
 

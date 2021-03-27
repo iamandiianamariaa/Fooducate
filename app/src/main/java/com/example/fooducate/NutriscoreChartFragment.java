@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,11 +20,14 @@ import com.anychart.enums.Align;
 import com.anychart.enums.LegendLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class NutriscoreChartFragment extends Fragment {
+    private HashMap<String, Integer> hashMap;
 
-    public NutriscoreChartFragment() {
+    public NutriscoreChartFragment(HashMap<String, Integer> hashMap) {
+        this.hashMap = hashMap;
     }
 
     @Nullable
@@ -44,11 +46,12 @@ public class NutriscoreChartFragment extends Fragment {
         });
 
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("A", 6371664));
-        data.add(new ValueDataEntry("B", 789622));
-        data.add(new ValueDataEntry("C", 7216301));
-        data.add(new ValueDataEntry("D", 1486621));
-        data.add(new ValueDataEntry("E", 1200000));
+        System.out.println(hashMap.get("a"));
+        data.add(new ValueDataEntry("A", hashMap.get("a")));
+        data.add(new ValueDataEntry("B", hashMap.get("b")));
+        data.add(new ValueDataEntry("C", hashMap.get("c")));
+        data.add(new ValueDataEntry("D", hashMap.get("d")));
+        data.add(new ValueDataEntry("E", hashMap.get("e")));
 
         pie.data(data);
 

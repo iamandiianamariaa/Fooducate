@@ -50,8 +50,6 @@ public class ProductInformationActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
 
-        //TextView text = findViewById(R.id.txt);
-
         Bundle b = getIntent().getExtras();
         String id = b.getString("barcode");
         Boolean scanned = b.getBoolean("scanned");

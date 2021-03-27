@@ -26,6 +26,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class ReportFragment extends Fragment {
+    private HashMap<String, Integer> nutrientsMap = new HashMap<String, Integer>();
 
     @Nullable
     @Override
@@ -33,7 +34,7 @@ public class ReportFragment extends Fragment {
         View view = inflater.inflate(R.layout.reports_fragment_layout, container, false);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         ViewPager viewPager = view.findViewById(R.id.view_pager);
-        MainAdapter adapter = new MainAdapter(getFragmentManager());
+        MainAdapter adapter = new MainAdapter(getChildFragmentManager());
         HashMap<String, Integer> nutriMap = new HashMap<String, Integer>();
         HashMap<Integer, Integer> novaMap = new HashMap<Integer, Integer>();
 
@@ -65,12 +66,18 @@ public class ReportFragment extends Fragment {
                         else
                             novaMap.put(obj.getObject().getProduct().getNova(), ++score);
                     }
+                    addInHash("Fat", obj.getObject().getProduct().getNutriments().getFat_100g());
+                    addInHash("Saturated", obj.getObject().getProduct().getNutriments().getSaturated_fat_100g());
+                    addInHash("Sugars", obj.getObject().getProduct().getNutriments().getSugars_100g());
+                    addInHash("Carbs", obj.getObject().getProduct().getNutriments().getCarbo_100g());
+                    addInHash("Sodium", obj.getObject().getProduct().getNutriments().getSodium_100g());
+                    addInHash("Salt", obj.getObject().getProduct().getNutriments().getSalt_100g());
 
                 }
                 adapter.notifyDataSetChanged();
                 adapter.addFragment(new NutriscoreChartFragment(nutriMap),"Nutriscore");
                 adapter.addFragment(new NovascoreChartFragment(novaMap),"Novascore");
-                adapter.addFragment(new NutrientsChartFragment(),"Nutrients");
+                adapter.addFragment(new NutrientsChartFragment(nutrientsMap),"Nutrients");
                 viewPager.setAdapter(adapter);
                 tabLayout.setupWithViewPager(viewPager);
             }
@@ -114,5 +121,17 @@ public class ReportFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             return stringArrayList.get(position);
         }
+    }
+
+    public void addInHash(String nutriment, double value){
+        if (value != 0) {
+
+            Integer score = nutrientsMap.get(nutriment);
+            if (score == null)
+                nutrientsMap.put(nutriment, 1);
+            else
+                nutrientsMap.put(nutriment, ++score);
+        }
+
     }
 }

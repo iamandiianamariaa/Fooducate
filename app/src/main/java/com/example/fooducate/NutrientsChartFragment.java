@@ -1,5 +1,6 @@
 package com.example.fooducate;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,24 +8,26 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.chart.common.listener.Event;
-import com.anychart.chart.common.listener.ListenersInterface;
-import com.anychart.charts.Pie;
-import com.anychart.enums.Align;
-import com.anychart.enums.LegendLayout;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class NutrientsChartFragment extends Fragment {
+    private HashMap<String, Integer> hashMap;
+    private String[] labelArray = {"Fat", "Saturated Fat", "Sugars", "Carbs", "Sodium", "Salt"};
 
-    public NutrientsChartFragment() {
+    public NutrientsChartFragment(HashMap<String, Integer> hashMap) {
+        this.hashMap = hashMap;
     }
 
     @Nullable
@@ -32,40 +35,71 @@ public class NutrientsChartFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nutrients_fragment_layout, container, false);
 
-        AnyChartView anyChartView = view.findViewById(R.id.any_chart_view);
+        PieChart piechart = view.findViewById(R.id.chart1);
+        piechart.setUsePercentValues(true);
+        piechart.getDescription().setEnabled(false);
+        piechart.setExtraOffsets(0, -100, 0, 0);
 
-        Pie pie = AnyChart.pie();
+        piechart.setDragDecelerationFrictionCoef(0.99f);
 
-        pie.setOnClickListener(new ListenersInterface.OnClickListener(new String[]{"x", "value"}) {
-            @Override
-            public void onClick(Event event) {
-            }
-        });
+        piechart.setDrawHoleEnabled(true);
+        piechart.setHoleColor(Color.WHITE);
+        piechart.setTransparentCircleRadius(61f);
 
-        List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("Fat", 6371664));
-        data.add(new ValueDataEntry("Saturated Fat", 789622));
-        data.add(new ValueDataEntry("Sugar", 7216301));
-        data.add(new ValueDataEntry("Sodium", 1486621));
-        data.add(new ValueDataEntry("Salt", 1200000));
+        piechart.setCenterText("Nutrients report based on your scanned products");
+        piechart.setCenterTextColor(Color.BLACK);
+        ArrayList<PieEntry> values = new ArrayList<>();
+        if (hashMap.get("Fat") != null)
+            values.add(new PieEntry(hashMap.get("Fat"), labelArray[0]));
 
-        pie.data(data);
+        if (hashMap.get("Saturated") != null)
+            values.add(new PieEntry(hashMap.get("Saturated"), labelArray[1]));
 
-        pie.title("Nutrients report based on your scanned products");
+        if (hashMap.get("Sugars") != null)
+            values.add(new PieEntry(hashMap.get("Sugars"), labelArray[2]));
 
-        pie.labels().position("outside");
+        if (hashMap.get("Carbs") != null)
+            values.add(new PieEntry(hashMap.get("Carbs"), labelArray[3]));
 
-        pie.legend().title().enabled(true);
-        pie.legend().title()
-                .text("Legend")
-                .padding(0d, 0d, 10d, 0d);
+        if (hashMap.get("Sodium") != null)
+            values.add(new PieEntry(hashMap.get("Sodium"), labelArray[4]));
+        if (hashMap.get("Salt") != null)
+            values.add(new PieEntry(hashMap.get("Salt"), labelArray[5]));
 
-        pie.legend()
-                .position("center-bottom")
-                .itemsLayout(LegendLayout.VERTICAL)
-                .align(Align.CENTER);
+        PieDataSet pieDataSet = new PieDataSet(values, "Nutrients report based on your scanned products");
 
-        anyChartView.setChart(pie);
+        pieDataSet.setSliceSpace(3f);
+        pieDataSet.setSelectionShift(5f);
+
+
+        Legend l = piechart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(false);
+        l.setEnabled(true);
+        l.setTextColor(Color.GRAY);
+        l.setTextSize(15);
+        l.setForm(Legend.LegendForm.SQUARE);
+        l.setFormSize(20);
+
+        LegendEntry[] legendEntries =new LegendEntry[5];
+        for(int i=0; i<legendEntries.length;i++)
+        {
+            LegendEntry entry = new LegendEntry();
+            entry.label = labelArray[i];
+            legendEntries[i]=entry;
+        }
+
+        l.setCustom(legendEntries);
+
+        piechart.animateY(1000, Easing.EaseInOutCubic);
+        PieData data = new PieData(pieDataSet);
+
+        data.setValueTextSize(15f);
+        data.setValueTextColor(Color.BLACK);
+
+        piechart.setData(data);
         return view;
     }
 }

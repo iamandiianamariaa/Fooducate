@@ -14,4 +14,9 @@
     <color name="medium_green">#40B490</color>
     <color name="dark_green">#2C8066</color>
     <color name="red">#cf352e</color>
+    <color name="deep_green">#038141</color>
+    <color name="light_green1">#85BB2F</color>
+    <color name="yellow">#FECB02</color>
+    <color name="orange">#EE8100</color>
+    <color name="bright_red">#E63E11</color>
 </resources>

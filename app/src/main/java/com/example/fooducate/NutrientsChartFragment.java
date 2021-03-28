@@ -1,6 +1,7 @@
 package com.example.fooducate;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -39,15 +41,17 @@ public class NutrientsChartFragment extends Fragment {
         PieChart piechart = view.findViewById(R.id.chart1);
         piechart.setUsePercentValues(true);
         piechart.getDescription().setEnabled(false);
-        piechart.setExtraOffsets(0, 0, 0, -50);
+        piechart.setExtraOffsets(0, -200, 0, -50);
 
         piechart.setDragDecelerationFrictionCoef(0.99f);
 
+        piechart.setCenterTextTypeface(Typeface.MONOSPACE);
         piechart.setDrawHoleEnabled(true);
         piechart.setHoleColor(Color.WHITE);
         piechart.setTransparentCircleRadius(61f);
 
         piechart.setCenterText("Nutrients report");
+        piechart.setUsePercentValues(true);
         piechart.setCenterTextSize(20);
         piechart.setCenterTextColor(Color.BLACK);
 
@@ -103,15 +107,16 @@ public class NutrientsChartFragment extends Fragment {
         pieDataSet.setColors(colors);
 
         Legend l = piechart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
         l.setEnabled(true);
         l.setTextColor(Color.GRAY);
         l.setTextSize(15);
         l.setForm(Legend.LegendForm.SQUARE);
         l.setFormSize(20);
+        l.setWordWrapEnabled(true);
 
         LegendEntry[] legendEntries =new LegendEntry[5];
         for(int i=0; i<legendEntries.length;i++)
@@ -129,6 +134,7 @@ public class NutrientsChartFragment extends Fragment {
 
         data.setValueTextSize(15f);
         data.setValueTextColor(Color.BLACK);
+        data.setValueFormatter(new PercentFormatter(piechart));
 
         piechart.setData(data);
         return view;

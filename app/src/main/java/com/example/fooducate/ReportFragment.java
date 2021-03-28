@@ -1,5 +1,6 @@
 package com.example.fooducate;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ReportFragment extends Fragment {
     private HashMap<String, Integer> nutrientsMap = new HashMap<String, Integer>();
@@ -134,4 +137,5 @@ public class ReportFragment extends Fragment {
         }
 
     }
+
 }

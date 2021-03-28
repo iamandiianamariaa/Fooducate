@@ -1,6 +1,7 @@
 package com.example.fooducate;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,8 +48,10 @@ public class NutriscoreChartFragment extends Fragment {
         piechart.setHoleColor(Color.WHITE);
         piechart.setTransparentCircleRadius(61f);
 
+        piechart.setCenterTextTypeface(Typeface.MONOSPACE);
         piechart.setCenterText("Nutriscore report");
         piechart.setCenterTextSize(20);
+        piechart.setUsePercentValues(true);
         piechart.setCenterTextColor(Color.BLACK);
 
         ArrayList<PieEntry> values = new ArrayList<>();
@@ -124,6 +128,7 @@ public class NutriscoreChartFragment extends Fragment {
 
         data.setValueTextSize(15f);
         data.setValueTextColor(Color.BLACK);
+        data.setValueFormatter(new PercentFormatter(piechart));
 
         piechart.setData(data);
         return view;

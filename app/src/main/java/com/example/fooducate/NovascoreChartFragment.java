@@ -1,6 +1,7 @@
 package com.example.fooducate;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,11 +45,13 @@ public class NovascoreChartFragment extends Fragment {
 
         piechart.setDragDecelerationFrictionCoef(0.99f);
 
+        piechart.setCenterTextTypeface(Typeface.MONOSPACE);
         piechart.setDrawHoleEnabled(true);
         piechart.setHoleColor(Color.WHITE);
         piechart.setTransparentCircleRadius(61f);
 
         piechart.setCenterText("Novascore report");
+        piechart.setUsePercentValues(true);
         piechart.setCenterTextSize(20);
         piechart.setCenterTextColor(Color.BLACK);
 
@@ -115,6 +119,7 @@ public class NovascoreChartFragment extends Fragment {
 
         data.setValueTextSize(15f);
         data.setValueTextColor(Color.BLACK);
+        data.setValueFormatter(new PercentFormatter(piechart));
 
         piechart.setData(data);
         return view;

@@ -152,14 +152,28 @@ public class NutriscoreChartFragment extends Fragment {
             }
         }
 
-        if(keys.contains("a")) {
+        if(keys.contains("a") || keys.contains("b")) {
 
             modelArrayList.add(new SwipeModel(
                     "Congrats, you ate plenty of nutritious foods!",
-                    "Based on your scanned products, we ",
-                    R.drawable.water_consumption
+                    "Based on your scanned products from the last 7 days, we created a chart which shows how many products of each Nutriscore level you have eaten. As you can see, you have eaten mostly A or B level foods, which are the healthiest and most nutrient-dense. Keep going and you will see great results!",
+                    R.drawable.ok
             ));
         }
+        if(keys.contains("c")){
+            modelArrayList.add(new SwipeModel(
+                    "Not good, not bad!",
+                    "Based on your scanned products from the last 7 days, we created a chart which shows how many products of each Nutriscore level you have eaten. As you can see, you have eaten mostly C level foods. It's not terrible, but try to stick to the healthiest choices. ",
+                    R.drawable.good
+            ));
+        }
+        if(keys.contains("d") || keys.contains("e")) {
+
+            modelArrayList.add(new SwipeModel(
+                    "Not the greatest result!",
+                    "Based on your scanned products from the last 7 days, we created a chart which shows how many products of each Nutriscore level you have eaten. As you can see, you have eaten mostly D or E level foods. You haven't made the best food choices, but you should read our recommendations, because your health may be in danger in the long run.",
+                    R.drawable.good
+            ));
 
             modelArrayList.add(new SwipeModel(
                     "Don't forget to drink water",
@@ -183,7 +197,7 @@ public class NutriscoreChartFragment extends Fragment {
                     "Reduce your salt intake to 5g per day, equivalent to about one teaspoon. Consuming excessive amounts of sugars increases the risk of tooth decay and unhealthy weight gain. The maximum amount per day is 50g or about 12 teaspoons for an adult. ",
                     R.drawable.sugar
             ));
-
+        }
         Adapter adapter = new Adapter(getContext(), modelArrayList);
         viewPager.setAdapter(adapter);
     }

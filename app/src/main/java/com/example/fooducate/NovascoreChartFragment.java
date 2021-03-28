@@ -50,7 +50,7 @@ public class NovascoreChartFragment extends Fragment {
         piechart.setHoleColor(Color.WHITE);
         piechart.setTransparentCircleRadius(61f);
 
-        piechart.setCenterText("Novascore report");
+        piechart.setCenterText("Novascore report for the last 7 days");
         piechart.setUsePercentValues(true);
         piechart.setCenterTextSize(20);
         piechart.setCenterTextColor(Color.BLACK);

@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -54,27 +55,44 @@ public class ReportFragment extends Fragment {
                     FirebaseModel obj = dataSnapshot.getValue(FirebaseModel.class);
 
                     if (obj.getObject().getProduct().getNutriscore() != null) {
+                        Date today = new Date();
+                        long diff =  today.getTime() - obj.getScanDate().getTime();
+                        int numOfDays = (int) (diff / (1000 * 60 * 60 * 24));
 
-                        Integer score = nutriMap.get(obj.getObject().getProduct().getNutriscore());
-                        if (score == null)
-                            nutriMap.put(obj.getObject().getProduct().getNutriscore(), 1);
-                        else
-                            nutriMap.put(obj.getObject().getProduct().getNutriscore(), ++score);
+                        if(numOfDays<=7) {
+                            Integer score = nutriMap.get(obj.getObject().getProduct().getNutriscore());
+                            if (score == null)
+                                nutriMap.put(obj.getObject().getProduct().getNutriscore(), 1);
+                            else
+                                nutriMap.put(obj.getObject().getProduct().getNutriscore(), ++score);
+                        }
                 }
                     if (obj.getObject().getProduct().getNova() != 0) {
+                        Date today = new Date();
+                        long diff =  today.getTime() - obj.getScanDate().getTime();
+                        int numOfDays = (int) (diff / (1000 * 60 * 60 * 24));
 
-                        Integer score = novaMap.get(obj.getObject().getProduct().getNova());
-                        if (score == null)
-                            novaMap.put(obj.getObject().getProduct().getNova(), 1);
-                        else
-                            novaMap.put(obj.getObject().getProduct().getNova(), ++score);
+                        if(numOfDays<=7) {
+
+                            Integer score = novaMap.get(obj.getObject().getProduct().getNova());
+                            if (score == null)
+                                novaMap.put(obj.getObject().getProduct().getNova(), 1);
+                            else
+                                novaMap.put(obj.getObject().getProduct().getNova(), ++score);
+                        }
                     }
-                    addInHash("Fat", obj.getObject().getProduct().getNutriments().getFat_100g());
-                    addInHash("Saturated", obj.getObject().getProduct().getNutriments().getSaturated_fat_100g());
-                    addInHash("Sugars", obj.getObject().getProduct().getNutriments().getSugars_100g());
-                    addInHash("Carbs", obj.getObject().getProduct().getNutriments().getCarbo_100g());
-                    addInHash("Sodium", obj.getObject().getProduct().getNutriments().getSodium_100g());
-                    addInHash("Salt", obj.getObject().getProduct().getNutriments().getSalt_100g());
+                    Date today = new Date();
+                    long diff =  today.getTime() - obj.getScanDate().getTime();
+                    int numOfDays = (int) (diff / (1000 * 60 * 60 * 24));
+                    if(numOfDays<=7) {
+
+                        addInHash("Fat", obj.getObject().getProduct().getNutriments().getFat_100g());
+                        addInHash("Saturated", obj.getObject().getProduct().getNutriments().getSaturated_fat_100g());
+                        addInHash("Sugars", obj.getObject().getProduct().getNutriments().getSugars_100g());
+                        addInHash("Carbs", obj.getObject().getProduct().getNutriments().getCarbo_100g());
+                        addInHash("Sodium", obj.getObject().getProduct().getNutriments().getSodium_100g());
+                        addInHash("Salt", obj.getObject().getProduct().getNutriments().getSalt_100g());
+                    }
 
                 }
                 adapter.notifyDataSetChanged();

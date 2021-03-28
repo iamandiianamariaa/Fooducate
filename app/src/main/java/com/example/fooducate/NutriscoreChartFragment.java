@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -22,11 +23,15 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class NutriscoreChartFragment extends Fragment {
     private HashMap<String, Integer> hashMap;
-    String[] labelArray = {"A", "B", "C", "D", "E"};
+    private String[] labelArray = {"A", "B", "C", "D", "E"};
+    private ViewPager viewPager;
 
     public NutriscoreChartFragment(HashMap<String, Integer> hashMap) {
         this.hashMap = hashMap;
@@ -36,6 +41,9 @@ public class NutriscoreChartFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nutriscore_fragment_layout, container, false);
+
+        viewPager = view.findViewById(R.id.viewPager);
+        loadCards();
 
         PieChart piechart = view.findViewById(R.id.chart1);
         piechart.setUsePercentValues(true);
@@ -49,7 +57,7 @@ public class NutriscoreChartFragment extends Fragment {
         piechart.setTransparentCircleRadius(61f);
 
         piechart.setCenterTextTypeface(Typeface.MONOSPACE);
-        piechart.setCenterText("Nutriscore report");
+        piechart.setCenterText("Nutriscore report for the last 7 days");
         piechart.setCenterTextSize(20);
         piechart.setUsePercentValues(true);
         piechart.setCenterTextColor(Color.BLACK);
@@ -134,4 +142,49 @@ public class NutriscoreChartFragment extends Fragment {
         return view;
     }
 
+    private void loadCards(){
+        ArrayList<SwipeModel> modelArrayList = new ArrayList<>();
+        int max = Collections.max(hashMap.values());
+        List<String> keys = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
+            if (entry.getValue()==max) {
+                keys.add(entry.getKey());
+            }
+        }
+
+        if(keys.contains("a")) {
+
+            modelArrayList.add(new SwipeModel(
+                    "Congrats, you ate plenty of nutritious foods!",
+                    "Based on your scanned products, we ",
+                    R.drawable.water_consumption
+            ));
+        }
+
+            modelArrayList.add(new SwipeModel(
+                    "Don't forget to drink water",
+                    "Water plays many roles in your body, including maintaining electrolyte balance and blood pressure, lubricating joints, regulating body temperature, and promoting cell health.",
+                    R.drawable.water_consumption
+            ));
+            modelArrayList.add(new SwipeModel(
+                    "Eat vegetables and fruits",
+                    "Fruits and vegetables are low in fat, salt and sugar. They are a good source of dietary fibre. As part of a well-balanced, regular diet and a healthy, active lifestyle, a high intake of fruit and vegetables can help you to reduce obesity and maintain a healthy weight, lower your cholesterol and lower your blood pressure.",
+                    R.drawable.fruit
+            ));
+
+            modelArrayList.add(new SwipeModel(
+                    "Avoid processed junk food",
+                    "Processed junk food is incredibly unhealthy. These foods have been engineered to trigger your pleasure centers, so they trick your brain into overeating — even promoting food addiction in some people. They’re usually low in fiber, protein, and micronutrients but high in unhealthy ingredients like added sugar and refined grains. ",
+                    R.drawable.junk_food
+            ));
+
+            modelArrayList.add(new SwipeModel(
+                    "Consume less salt and sugar",
+                    "Reduce your salt intake to 5g per day, equivalent to about one teaspoon. Consuming excessive amounts of sugars increases the risk of tooth decay and unhealthy weight gain. The maximum amount per day is 50g or about 12 teaspoons for an adult. ",
+                    R.drawable.sugar
+            ));
+
+        Adapter adapter = new Adapter(getContext(), modelArrayList);
+        viewPager.setAdapter(adapter);
+    }
 }

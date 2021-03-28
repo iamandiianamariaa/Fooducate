@@ -195,7 +195,7 @@ public class NutriscoreChartFragment extends Fragment {
             modelArrayList.add(new SwipeModel(
                     "Consume less salt and sugar",
                     "Reduce your salt intake to 5g per day, equivalent to about one teaspoon. Consuming excessive amounts of sugars increases the risk of tooth decay and unhealthy weight gain. The maximum amount per day is 50g or about 12 teaspoons for an adult. ",
-                    R.drawable.sugar
+                    R.drawable.sugar1
             ));
         }
         Adapter adapter = new Adapter(getContext(), modelArrayList);

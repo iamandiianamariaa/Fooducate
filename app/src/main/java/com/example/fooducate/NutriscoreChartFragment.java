@@ -20,6 +20,7 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.ArrayList;
@@ -134,6 +135,7 @@ public class NutriscoreChartFragment extends Fragment {
         piechart.animateY(1000, Easing.EaseInOutCubic);
         PieData data = new PieData(pieDataSet);
 
+        pieDataSet.setValueFormatter(new MyValueFormatter());
         data.setValueTextSize(15f);
         data.setValueTextColor(Color.BLACK);
         data.setValueFormatter(new PercentFormatter(piechart));

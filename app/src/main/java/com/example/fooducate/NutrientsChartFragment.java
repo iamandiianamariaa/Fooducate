@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -20,8 +21,10 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,6 +32,7 @@ public class NutrientsChartFragment extends Fragment {
     private HashMap<String, Float> hashMap;
     private int numOfProducts;
     private String[] labelArray = {"Fat", "Saturated Fat", "Sugars", "Carbs", "Sodium", "Salt","Protein"};
+    private ViewPager viewPager;
 
     public NutrientsChartFragment(HashMap<String, Float> hashMap, int numOfProducts) {
         this.hashMap = hashMap;
@@ -39,6 +43,9 @@ public class NutrientsChartFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nutrients_fragment_layout, container, false);
+
+        viewPager = view.findViewById(R.id.viewPager);
+        //loadCards();
 
         PieChart piechart = view.findViewById(R.id.chart1);
         piechart.setUsePercentValues(true);
@@ -159,8 +166,26 @@ public class NutrientsChartFragment extends Fragment {
 
         piechart.animateY(1000, Easing.EaseInOutCubic);
         PieData data = new PieData(pieDataSet);
+        class MyValueFormatter extends ValueFormatter {
 
-        pieDataSet.setValueFormatter(new MyValueFormatter());
+            private DecimalFormat mFormat;
+
+            public MyValueFormatter() {
+                mFormat = new DecimalFormat("#.##"); // use one decimal
+            }
+
+            @Override
+            public String getPieLabel(float value, PieEntry pieEntry) {
+                if (piechart != null && piechart.isUsePercentValuesEnabled()) {
+                    // Converted to percent
+                    return getFormattedValue(value);
+                } else {
+                    // raw value, skip percent sign
+                    return mFormat.format(value);
+                }
+            }
+        }
+        data.setValueFormatter(new MyValueFormatter());
         data.setValueTextSize(15f);
         data.setValueTextColor(Color.BLACK);
         data.setValueFormatter(new PercentFormatter(piechart));

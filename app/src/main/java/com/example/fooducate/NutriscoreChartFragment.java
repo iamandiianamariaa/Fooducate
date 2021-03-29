@@ -135,7 +135,7 @@ public class NutriscoreChartFragment extends Fragment {
         piechart.animateY(1000, Easing.EaseInOutCubic);
         PieData data = new PieData(pieDataSet);
 
-        pieDataSet.setValueFormatter(new MyValueFormatter());
+        //pieDataSet.setValueFormatter(new MyValueFormatter());
         data.setValueTextSize(15f);
         data.setValueTextColor(Color.BLACK);
         data.setValueFormatter(new PercentFormatter(piechart));

@@ -22,7 +22,7 @@ public class NotificationBroadcast extends BroadcastReceiver {
         repeatingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 100, repeatingIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notifyMe")
+        NotificationCompat.Builder builder1 = new NotificationCompat.Builder(context, "notifyMe")
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Daily Remainder")
@@ -30,7 +30,7 @@ public class NotificationBroadcast extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
-        notificationManager.notify(100, builder.build());
+        notificationManager.notify(100, builder1.build());
     }
 }
 

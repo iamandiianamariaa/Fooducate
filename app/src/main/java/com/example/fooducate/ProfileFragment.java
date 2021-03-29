@@ -76,8 +76,8 @@ public class ProfileFragment extends Fragment {
                     createNotificationChannel();
 
                     Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.HOUR_OF_DAY, 21);
-                    calendar.set(Calendar.MINUTE, 18);
+                    calendar.set(Calendar.HOUR_OF_DAY, 12);
+                    calendar.set(Calendar.MINUTE, 00);
                     calendar.set(Calendar.SECOND, 0);
 
                     Intent intent = new Intent(getActivity(), NotificationBroadcast.class);

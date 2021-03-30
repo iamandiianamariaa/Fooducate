@@ -87,7 +87,7 @@ public class ReportFragment extends Fragment {
                     Date today = new Date();
                     long diff =  today.getTime() - obj.getScanDate().getTime();
                     int numOfDays = (int) (diff / (1000 * 60 * 60 * 24));
-                    if(numOfDays<=7) {
+                    if(numOfDays<=1) {
 
                         numOfProducts++;
                         addInHash("Protein", obj.getObject().getProduct().getNutriments().getProteins_100g());
@@ -96,7 +96,7 @@ public class ReportFragment extends Fragment {
                         addInHash("Sugars", obj.getObject().getProduct().getNutriments().getSugars_100g());
                         addInHash("Carbs", obj.getObject().getProduct().getNutriments().getCarbo_100g());
                         addInHash("Sodium", obj.getObject().getProduct().getNutriments().getSodium_100g());
-                        addInHash("Salt", obj.getObject().getProduct().getNutriments().getSalt_100g());
+                        addInHash("Fiber", obj.getObject().getProduct().getNutriments().getFiber_100g());
                     }
 
                 }

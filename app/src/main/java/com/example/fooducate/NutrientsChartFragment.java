@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -21,11 +20,7 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,7 +43,6 @@ public class NutrientsChartFragment extends Fragment {
         if(!hashMap.isEmpty()) {
             viewPager = view.findViewById(R.id.viewPager);
             PieChart piechart = view.findViewById(R.id.chart1);
-            piechart.setUsePercentValues(true);
             piechart.getDescription().setEnabled(false);
             piechart.setExtraOffsets(0, -100, 0, -50);
 
@@ -158,38 +152,7 @@ public class NutrientsChartFragment extends Fragment {
 
             piechart.animateY(1000, Easing.EaseInOutCubic);
 
-            class MyValueFormatter extends ValueFormatter {
-
-                public DecimalFormat mFormat;
-                private PieChart pieChart;
-
-                public MyValueFormatter() {
-                    mFormat = new DecimalFormat("#.##");
-                }
-
-                public MyValueFormatter(PieChart pieChart) {
-                    this();
-                    this.pieChart = pieChart;
-                }
-
-                @Override
-                public String getFormattedValue(float value) {
-                    return mFormat.format(value) + " %";
-                }
-
-                @Override
-                public String getPieLabel(float value, PieEntry pieEntry) {
-                    if (pieChart != null && pieChart.isUsePercentValuesEnabled()) {
-                        // Converted to percent
-                        return getFormattedValue(value);
-                    } else {
-                        // raw value, skip percent sign
-                        return mFormat.format(value);
-                    }
-                }
-
-            }
-            pieDataSet.setValueFormatter(new MyValueFormatter());
+            pieDataSet.setValueFormatter(new MyValueFormatter(piechart));
             PieData data = new PieData(pieDataSet);
             data.setValueTextSize(15f);
             data.setValueTextColor(Color.BLACK);

@@ -21,8 +21,6 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.DefaultValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +47,6 @@ public class NutriscoreChartFragment extends Fragment {
             viewPager = view.findViewById(R.id.viewPager);
             loadCards();
             PieChart piechart = view.findViewById(R.id.chart1);
-            piechart.setUsePercentValues(true);
             piechart.getDescription().setEnabled(false);
             piechart.setExtraOffsets(0, -100, 0, 0);
 
@@ -129,12 +126,11 @@ public class NutriscoreChartFragment extends Fragment {
             l.setCustom(legendEntries);
 
             piechart.animateY(1000, Easing.EaseInOutCubic);
+            pieDataSet.setValueFormatter(new MyValueFormatter(piechart));
             PieData data = new PieData(pieDataSet);
 
-            //pieDataSet.setValueFormatter(new MyValueFormatter());
             data.setValueTextSize(15f);
             data.setValueTextColor(Color.BLACK);
-            data.setValueFormatter(new PercentFormatter(piechart));
 
             piechart.setData(data);
         }

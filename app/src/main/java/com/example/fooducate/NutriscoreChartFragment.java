@@ -44,103 +44,99 @@ public class NutriscoreChartFragment extends Fragment {
         View view = inflater.inflate(R.layout.nutriscore_fragment_layout, container, false);
 
         viewPager = view.findViewById(R.id.viewPager);
-        loadCards();
+        if(!hashMap.isEmpty()) {
 
-        PieChart piechart = view.findViewById(R.id.chart1);
-        piechart.setUsePercentValues(true);
-        piechart.getDescription().setEnabled(false);
-        piechart.setExtraOffsets(0, -100, 0, 0);
+            loadCards();
+            PieChart piechart = view.findViewById(R.id.chart1);
+            piechart.setUsePercentValues(true);
+            piechart.getDescription().setEnabled(false);
+            piechart.setExtraOffsets(0, -100, 0, 0);
 
-        piechart.setDragDecelerationFrictionCoef(0.99f);
+            piechart.setDragDecelerationFrictionCoef(0.99f);
 
-        piechart.setDrawHoleEnabled(true);
-        piechart.setHoleColor(Color.WHITE);
-        piechart.setTransparentCircleRadius(61f);
+            piechart.setDrawHoleEnabled(true);
+            piechart.setHoleColor(Color.WHITE);
+            piechart.setTransparentCircleRadius(61f);
 
-        piechart.setCenterTextTypeface(Typeface.MONOSPACE);
-        piechart.setCenterText("Nutriscore report for the last 7 days");
-        piechart.setCenterTextSize(20);
-        piechart.setUsePercentValues(true);
-        piechart.setCenterTextColor(Color.BLACK);
+            piechart.setCenterTextTypeface(Typeface.MONOSPACE);
+            piechart.setCenterText("Nutriscore report for the last 7 days");
+            piechart.setCenterTextSize(20);
+            piechart.setUsePercentValues(true);
+            piechart.setCenterTextColor(Color.BLACK);
 
-        ArrayList<PieEntry> values = new ArrayList<>();
-        ArrayList<Integer> colorsLegend = new ArrayList<Integer>();
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+            ArrayList<PieEntry> values = new ArrayList<>();
+            ArrayList<Integer> colorsLegend = new ArrayList<Integer>();
+            ArrayList<Integer> colors = new ArrayList<Integer>();
 
-        colorsLegend.add(ContextCompat.getColor(getContext(), R.color.deep_green));
-        colorsLegend.add(ContextCompat.getColor(getContext(), R.color.light_green1));
-        colorsLegend.add(ContextCompat.getColor(getContext(), R.color.yellow));
-        colorsLegend.add(ContextCompat.getColor(getContext(), R.color.orange));
-        colorsLegend.add(ContextCompat.getColor(getContext(), R.color.bright_red));
+            colorsLegend.add(ContextCompat.getColor(getContext(), R.color.deep_green));
+            colorsLegend.add(ContextCompat.getColor(getContext(), R.color.light_green1));
+            colorsLegend.add(ContextCompat.getColor(getContext(), R.color.yellow));
+            colorsLegend.add(ContextCompat.getColor(getContext(), R.color.orange));
+            colorsLegend.add(ContextCompat.getColor(getContext(), R.color.bright_red));
 
-        if (hashMap.get("a") != null)
-        {
-            values.add(new PieEntry(hashMap.get("a"), labelArray[0]));
-            colors.add(ContextCompat.getColor(getContext(), R.color.deep_green));
+            if (hashMap.get("a") != null) {
+                values.add(new PieEntry(hashMap.get("a"), labelArray[0]));
+                colors.add(ContextCompat.getColor(getContext(), R.color.deep_green));
+            }
+
+            if (hashMap.get("b") != null) {
+                values.add(new PieEntry(hashMap.get("b"), labelArray[1]));
+                colors.add(ContextCompat.getColor(getContext(), R.color.light_green1));
+            }
+
+            if (hashMap.get("c") != null) {
+                values.add(new PieEntry(hashMap.get("c"), labelArray[2]));
+                colors.add(ContextCompat.getColor(getContext(), R.color.yellow));
+            }
+
+            if (hashMap.get("d") != null) {
+                values.add(new PieEntry(hashMap.get("d"), labelArray[3]));
+                colors.add(ContextCompat.getColor(getContext(), R.color.orange));
+            }
+
+            if (hashMap.get("e") != null) {
+                values.add(new PieEntry(hashMap.get("e"), labelArray[4]));
+                colors.add(ContextCompat.getColor(getContext(), R.color.bright_red));
+            }
+
+            PieDataSet pieDataSet = new PieDataSet(values, "Nutriscore report");
+
+            pieDataSet.setColors(colors);
+            pieDataSet.setSliceSpace(3f);
+            pieDataSet.setSelectionShift(5f);
+
+
+            Legend l = piechart.getLegend();
+            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+            l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+            l.setDrawInside(false);
+            l.setEnabled(true);
+            l.setTextColor(Color.GRAY);
+            l.setTextSize(15);
+            l.setForm(Legend.LegendForm.SQUARE);
+            l.setFormSize(20);
+
+            LegendEntry[] legendEntries = new LegendEntry[5];
+            for (int i = 0; i < legendEntries.length; i++) {
+                LegendEntry entry = new LegendEntry();
+                entry.formColor = colorsLegend.get(i);
+                entry.label = labelArray[i];
+                legendEntries[i] = entry;
+            }
+
+            l.setCustom(legendEntries);
+
+            piechart.animateY(1000, Easing.EaseInOutCubic);
+            PieData data = new PieData(pieDataSet);
+
+            //pieDataSet.setValueFormatter(new MyValueFormatter());
+            data.setValueTextSize(15f);
+            data.setValueTextColor(Color.BLACK);
+            data.setValueFormatter(new PercentFormatter(piechart));
+
+            piechart.setData(data);
         }
-
-        if (hashMap.get("b") != null)
-        {
-            values.add(new PieEntry(hashMap.get("b"), labelArray[1]));
-            colors.add(ContextCompat.getColor(getContext(), R.color.light_green1));
-        }
-
-        if (hashMap.get("c") != null)
-        {
-            values.add(new PieEntry(hashMap.get("c"), labelArray[2]));
-            colors.add(ContextCompat.getColor(getContext(), R.color.yellow));
-        }
-
-        if (hashMap.get("d") != null)
-        {
-            values.add(new PieEntry(hashMap.get("d"), labelArray[3]));
-            colors.add(ContextCompat.getColor(getContext(), R.color.orange));
-        }
-
-        if (hashMap.get("e") != null)
-        {
-            values.add(new PieEntry(hashMap.get("e"), labelArray[4]));
-            colors.add(ContextCompat.getColor(getContext(), R.color.bright_red));
-        }
-
-        PieDataSet pieDataSet = new PieDataSet(values, "Nutriscore report");
-
-        pieDataSet.setColors(colors);
-        pieDataSet.setSliceSpace(3f);
-        pieDataSet.setSelectionShift(5f);
-
-
-        Legend l = piechart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(false);
-        l.setEnabled(true);
-        l.setTextColor(Color.GRAY);
-        l.setTextSize(15);
-        l.setForm(Legend.LegendForm.SQUARE);
-        l.setFormSize(20);
-
-        LegendEntry[] legendEntries =new LegendEntry[5];
-        for(int i=0; i<legendEntries.length;i++)
-        {
-            LegendEntry entry = new LegendEntry();
-            entry.formColor = colorsLegend.get(i);
-            entry.label = labelArray[i];
-            legendEntries[i]=entry;
-        }
-
-        l.setCustom(legendEntries);
-
-        piechart.animateY(1000, Easing.EaseInOutCubic);
-        PieData data = new PieData(pieDataSet);
-
-        //pieDataSet.setValueFormatter(new MyValueFormatter());
-        data.setValueTextSize(15f);
-        data.setValueTextColor(Color.BLACK);
-        data.setValueFormatter(new PercentFormatter(piechart));
-
-        piechart.setData(data);
         return view;
     }
 

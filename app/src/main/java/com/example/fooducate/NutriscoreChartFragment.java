@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -43,9 +44,9 @@ public class NutriscoreChartFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nutriscore_fragment_layout, container, false);
 
-        viewPager = view.findViewById(R.id.viewPager);
         if(!hashMap.isEmpty()) {
 
+            viewPager = view.findViewById(R.id.viewPager);
             loadCards();
             PieChart piechart = view.findViewById(R.id.chart1);
             piechart.setUsePercentValues(true);
@@ -136,6 +137,11 @@ public class NutriscoreChartFragment extends Fragment {
             data.setValueFormatter(new PercentFormatter(piechart));
 
             piechart.setData(data);
+        }
+        else
+        {
+            CardView cardView = view.findViewById(R.id.card);
+            cardView.setVisibility(View.INVISIBLE);
         }
         return view;
     }

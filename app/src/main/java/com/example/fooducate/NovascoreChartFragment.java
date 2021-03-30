@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -47,9 +48,8 @@ public class NovascoreChartFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.novascore_fragment_layout, container, false);
 
-        viewPager = view.findViewById(R.id.viewPager);
-
         if(!hashMap.isEmpty()) {
+            viewPager = view.findViewById(R.id.viewPager);
             loadCards();
             PieChart piechart = view.findViewById(R.id.chart1);
             piechart.setUsePercentValues(true);
@@ -130,6 +130,11 @@ public class NovascoreChartFragment extends Fragment {
             data.setValueFormatter(new PercentFormatter(piechart));
 
             piechart.setData(data);
+        }
+        else
+        {
+            CardView cardView = view.findViewById(R.id.card);
+            cardView.setVisibility(View.INVISIBLE);
         }
         return view;
     }

@@ -22,6 +22,7 @@ public class MyValueFormatter extends ValueFormatter {
 
     @Override
     public String getFormattedValue(float value) {
+        if(value<=2) return "";
         return mFormat.format(value) + " %";
     }
 

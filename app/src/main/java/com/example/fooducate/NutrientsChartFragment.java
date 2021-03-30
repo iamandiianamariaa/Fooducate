@@ -20,6 +20,7 @@ import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.interfaces.datasets.IPieDataSet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -154,6 +155,12 @@ public class NutrientsChartFragment extends Fragment {
 
             pieDataSet.setValueFormatter(new MyValueFormatter(piechart));
             PieData data = new PieData(pieDataSet);
+
+            int index = data.getDataSets().size();
+            for (IPieDataSet set : data.getDataSets()) {
+                System.out.println(set.getEntryForIndex(3).getY());
+
+                }
             data.setValueTextSize(15f);
             data.setValueTextColor(Color.BLACK);
 

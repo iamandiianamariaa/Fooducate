@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -50,6 +51,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
     private DatabaseReference myRef;
     private ArrayList<HistoryModel> products;
     private Context context;
+    ImageView imageView;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
@@ -57,6 +59,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.history_fragment_layout, container, false);
 
+        imageView= view.findViewById(R.id.notfound);
         context = container.getContext();
         recyclerView = view.findViewById(R.id.recyclerViewHistory);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -83,6 +86,8 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
                 for(DataSnapshot dataSnapshot: snapshot.getChildren())
                 {
                     FirebaseModel obj = dataSnapshot.getValue(FirebaseModel.class);
+                    if(obj!=null)
+                        imageView.setVisibility(View.INVISIBLE);
                     String nutriscore;
                     if(obj.getObject().getProduct().getNutriscore() == null)
                         nutriscore = "nutri";

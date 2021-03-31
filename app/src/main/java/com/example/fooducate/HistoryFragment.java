@@ -60,6 +60,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
         View view = inflater.inflate(R.layout.history_fragment_layout, container, false);
 
         imageView= view.findViewById(R.id.notfound);
+        imageView.setVisibility(View.INVISIBLE);
         context = container.getContext();
         recyclerView = view.findViewById(R.id.recyclerViewHistory);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -85,6 +86,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
                 products.clear();
                 for(DataSnapshot dataSnapshot: snapshot.getChildren())
                 {
+                    imageView.setVisibility(View.VISIBLE);
                     FirebaseModel obj = dataSnapshot.getValue(FirebaseModel.class);
                     if(obj!=null)
                         imageView.setVisibility(View.INVISIBLE);

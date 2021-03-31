@@ -34,6 +34,9 @@ public class SummaryFragment extends Fragment {
         ImageView nutri = view.findViewById(R.id.nutri);
         ImageView nova = view.findViewById(R.id.nova);
         ImageView eco = view.findViewById(R.id.eco);
+        ImageView vegan = view.findViewById(R.id.vegan);
+        ImageView vegetarian = view.findViewById(R.id.vegetarian);
+        ImageView palm = view.findViewById(R.id.palm);
         TextView labels = view.findViewById(R.id.labels);
 
         String nutriscore, novascore, ecoscore, text = "";
@@ -110,13 +113,26 @@ public class SummaryFragment extends Fragment {
         textView.setText(text);
 
 
+        text="\n" + "\n" + "Labels: ";
         if (object.getProduct().getLabels()!=null)
         {
-            text="\n" + "\n" + "Labels: ";
             for(String elem : object.getProduct().getLabels())
                 text+=elem.substring(3) + ", ";
             text = text.substring(0, text.length() - 2);
-            labels.setText(text);
+        }
+        labels.setText(text);
+        if (object.getProduct().getAnalysis()!=null)
+        {
+            for(String elem : object.getProduct().getAnalysis()) {
+                if(elem.equals("en:palm-oil-free"))
+                    palm.setImageResource(R.drawable.nopalm);
+                else if(elem.equals("en:palm-oil"))
+                    palm.setImageResource(R.drawable.palm);
+                if (elem.equals("en:vegan"))
+                    vegan.setImageResource(R.drawable.vegan);
+                if (elem.equals("en:vegetarian"))
+                    vegetarian.setImageResource(R.drawable.vegetarian);
+            }
         }
 
         return view;

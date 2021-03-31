@@ -43,8 +43,8 @@ public class SummaryFragment extends Fragment {
         if(object.getProduct().getImages()!=null && object.getProduct().getImages().getFront()!=null)
             Picasso.get().load(object.getProduct().getImages().getFront().getDisplay().getUrl()).into(productImg);
 
-        if(object.getProduct().getQuantity()!=null)
-            quantity.setText(object.getProduct().getQuantity());
+
+        quantity.setText(object.getProduct().getQuantity());
         if(object.getProduct().getNutriscore() == null)
             nutriscore = "nutri";
         else nutriscore = "nutri_" + object.getProduct().getNutriscore();

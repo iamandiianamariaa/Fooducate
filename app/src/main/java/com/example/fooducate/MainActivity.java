@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.history:
-                            selectedFragment = new HistoryFragment();
+                            selectedFragment = new HistoryFragment(getApplicationContext());
                             break;
                         case R.id.stats:
                             selectedFragment = new ReportFragment();

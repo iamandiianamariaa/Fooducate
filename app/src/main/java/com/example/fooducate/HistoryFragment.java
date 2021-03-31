@@ -53,6 +53,10 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
     private Context context;
     ImageView imageView;
 
+    public HistoryFragment(Context context) {
+        this.context = context;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     @Override
@@ -76,7 +80,7 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void Recycler() {
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
 
         products = new ArrayList<>();
 
@@ -84,12 +88,13 @@ public class HistoryFragment extends Fragment implements HistoryAdapter.OnProduc
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 products.clear();
+                if(snapshot.getChildrenCount()==0)
+                    imageView.setVisibility(View.VISIBLE);
+                else
+                    imageView.setVisibility(View.INVISIBLE);
                 for(DataSnapshot dataSnapshot: snapshot.getChildren())
                 {
-                    imageView.setVisibility(View.VISIBLE);
                     FirebaseModel obj = dataSnapshot.getValue(FirebaseModel.class);
-                    if(obj!=null)
-                        imageView.setVisibility(View.INVISIBLE);
                     String nutriscore;
                     if(obj.getObject().getProduct().getNutriscore() == null)
                         nutriscore = "nutri";

@@ -53,6 +53,17 @@ public class Product {
     @SerializedName("selected_images")
     private SelectedImages images;
 
+    @SerializedName("nutriscore_data")
+    private NutriscoreData nutriscoreData;
+
+    public NutriscoreData getNutriscoreData() {
+        return nutriscoreData;
+    }
+
+    public void setNutriscoreData(NutriscoreData nutriscoreData) {
+        this.nutriscoreData = nutriscoreData;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

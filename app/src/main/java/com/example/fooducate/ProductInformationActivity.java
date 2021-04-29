@@ -83,6 +83,12 @@ public class ProductInformationActivity extends AppCompatActivity {
                     }
                     else {
 
+                        if(product.getProduct().getNutriscoreData()!=null) {
+                            System.out.println(product.getProduct().getNutriscoreData().getIsBeverage());
+                            System.out.println(product.getProduct().getNutriscoreData().getIsWater());
+                            if (product.getProduct().getNutriscoreData().getIsBeverage() == 0 && product.getProduct().getNutriscoreData().getIsCheese() == 0 && product.getProduct().getNutriscoreData().getIsFat() == 0 && product.getProduct().getNutriscoreData().getIsWater() == 0)
+                                System.out.println(NutriscoreAlgorithm.getNutriscore(product.getProduct(), FoodType.GENERAL));
+                        }
                         myRef.child(userID).child(product.getProduct().getBarcode()).setValue(addInFirebase, new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {

@@ -238,7 +238,7 @@ public class NutrientsChartFragment extends Fragment {
                     ));
                 break;
             case "Protein":
-                if(value<=10)
+                if(value>=10 && value<=30)
                     modelArrayList.add(new SwipeModel(
                             "Great job, your protein levels are optimal!",
                             "Based on your scanned products from the last day, we created a chart which shows how much of each nutrient you have consumed. Your protein levels are in the range of 10% and 30%, which is recommended for an active individual.",
@@ -268,7 +268,7 @@ public class NutrientsChartFragment extends Fragment {
             case "Fiber":
                 if(value>=25)
                     modelArrayList.add(new SwipeModel(
-                            "Great job, your sodium levels are optimal!",
+                            "Great job, your fiber levels are optimal!",
                             "Based on your scanned products from the last day, we created a chart which shows how much of each nutrient you have consumed. Your fiber levels are in the range of 25g and 38g, which is recommended for an active individual.",
                             R.drawable.fruit
                     ));

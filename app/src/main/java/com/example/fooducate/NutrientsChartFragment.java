@@ -55,7 +55,7 @@ public class NutrientsChartFragment extends Fragment {
             piechart.setHoleColor(Color.WHITE);
             piechart.setTransparentCircleRadius(61f);
 
-            piechart.setCenterText("Nutrients report for the last 7 days");
+            piechart.setCenterText("Nutrients report for the last day");
             piechart.setUsePercentValues(true);
             piechart.setCenterTextSize(20);
             piechart.setCenterTextColor(Color.BLACK);

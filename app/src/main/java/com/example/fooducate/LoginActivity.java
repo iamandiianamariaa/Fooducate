@@ -75,11 +75,6 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        if (password.length() < 5) {
-            userPassword.setError("Password must be longer than 5 characters");
-            return;
-        }
-
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

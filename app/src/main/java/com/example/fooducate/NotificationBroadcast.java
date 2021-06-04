@@ -25,7 +25,7 @@ public class NotificationBroadcast extends BroadcastReceiver {
         NotificationCompat.Builder builder1 = new NotificationCompat.Builder(context, "notifyMe")
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Daily Remainder")
+                .setContentTitle("Daily Reminder")
                 .setContentText("Hey, don't forget to scan your daily food!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);

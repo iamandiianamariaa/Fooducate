@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.snackbar.Snackbar;
 

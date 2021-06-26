@@ -1,11 +1,7 @@
 package com.example.fooducate;
 
-import androidx.test.InstrumentationRegistry;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.rule.ActivityTestRule;
-import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
 
 import org.junit.Rule;

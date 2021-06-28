@@ -61,10 +61,8 @@ public class ProfileFragment extends Fragment {
 
         final SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("isChecked", 0);
 
-        // retrieve the selected value by user in application
         value = sharedPreferences.getBoolean("isChecked", value);
 
-        // set the switch to the selected value by user
         notificationToggle.setChecked(value);
 
         notificationToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -106,7 +104,6 @@ public class ProfileFragment extends Fragment {
         spannableText.setSpan(new ForegroundColorSpan(color), start, end, 0);
     }
 
-    // setting the communication channel for newer android versions
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "NotificationChannel";

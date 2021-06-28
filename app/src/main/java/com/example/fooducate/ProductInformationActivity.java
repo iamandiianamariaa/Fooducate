@@ -66,7 +66,6 @@ public class ProductInformationActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseObject> call, Response<ResponseObject> response) {
                 if (!response.isSuccessful()) {
-                    //text.setText("Code: " + response.code());
                     return;
                 }
 
@@ -82,6 +81,16 @@ public class ProductInformationActivity extends AppCompatActivity {
                         finish();
                     }
                     else {
+                        String nutri = null;
+                        if (product.getProduct().getNutriscoreData().getIsCheese() ==1)
+                            nutri = NutriscoreAlgorithm.getNutriscore(product.getProduct(), FoodType.CHEESE);
+                        else if (product.getProduct().getNutriscoreData().getIsBeverage() ==1)
+                            nutri = NutriscoreAlgorithm.getNutriscore(product.getProduct(), FoodType.BEVERAGE);
+                        else if (product.getProduct().getNutriscoreData().getIsFat() ==1)
+                            nutri = NutriscoreAlgorithm.getNutriscore(product.getProduct(), FoodType.FAT_MATTER);
+                        else nutri = NutriscoreAlgorithm.getNutriscore(product.getProduct(), FoodType.GENERAL);
+
+                        product.getProduct().setNutriscore(nutri);
                         myRef.child(userID).child(product.getProduct().getBarcode()).setValue(addInFirebase, new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
@@ -106,7 +115,6 @@ public class ProductInformationActivity extends AppCompatActivity {
                 }
             @Override
             public void onFailure(Call<ResponseObject> call, Throwable t) {
-                //text.setText(t.getMessage());
             }
         });
 

@@ -9,3 +9,9 @@ aditivi. Pe lângă acestea, sunt calculate și Nutri-Score, sistemul de clasifi
 această lucrare. Aceste produse scanate sunt memorate în baza de date, oferindu-i astfel utilizatorului un istoric al alimentelor consumate. Pe 
 baza acestora, se realizează niște diagrame personalizate, care ilustrează individual procentul de alimente din fiecare categorie Nutri-Score, 
 Nova și procentul din fiecare nutrient consumat. 
+
+Lucrare de licenta: https://docs.google.com/document/d/1kHb7FdJEcEL3LopwdtFgyXTXJnHfN1zOpuOhJYFuSn8/edit?usp=sharing
+
+Demo aplicatie: https://youtu.be/TrxkS1W7lzo
+
+Prezentare: https://www.canva.com/design/DAEiHRDpRoU/6Nxt36rnvJFI6WzIxGMe8Q/view?utm_content=DAEiHRDpRoU&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton

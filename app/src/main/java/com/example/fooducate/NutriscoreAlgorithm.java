@@ -1,5 +1,8 @@
 package com.example.fooducate;
 
+import com.example.fooducate.enums.FoodType;
+import com.example.fooducate.models.Product;
+
 public class NutriscoreAlgorithm {
 
     private static short getEnergyPositivePoints(final Float energy, final FoodType type) {

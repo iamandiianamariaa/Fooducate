@@ -9,6 +9,8 @@ import org.junit.Test;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+import com.example.fooducate.activities.MainActivity;
+
 public class ScanBarcodeTest {
     @Rule
     public ActivityTestRule<MainActivity> mLoginActivityTestRule =

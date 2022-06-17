@@ -8,6 +8,8 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.fooducate.activities.MainActivity;
+
 public class NotificationBroadcast extends BroadcastReceiver {
 
     public NotificationBroadcast() {

@@ -12,6 +12,8 @@ import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+import com.example.fooducate.activities.RegisterActivity;
+
 @RunWith(AndroidJUnit4.class)
 public class RegisterScreenTest {
 
